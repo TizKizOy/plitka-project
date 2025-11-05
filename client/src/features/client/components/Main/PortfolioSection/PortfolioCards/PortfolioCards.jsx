@@ -1,11 +1,11 @@
 import style from "./PortfolioCards.module.css";
-import PortfolioData from "../../../../data/portfolioData";
+import portfolioData from "../../../../data/portfolioData";
 import PortfolioCard from "../PortfolioCard/PortfolioCard";
 
 const PortfolioCards = () => {
   return (
     <div className={style.cardsContainer}>
-      {PortfolioData.map((el) => (
+      {portfolioData.map((el) => (
         <PortfolioCard
           key={el.id}
           img={el.image}

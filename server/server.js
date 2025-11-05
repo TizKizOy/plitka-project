@@ -12,7 +12,7 @@ const app = createApp();
 
 app.use(
   cors({
-    origin: [process.env.URL_OF_CORS_1, process.env.URL_OF_CORS_2],
+    origin: [process.env.URL_OF_CORS_1],
     credentials: true,
   })
 );
@@ -23,9 +23,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: true,
+      secure: false,
       httpOnly: true,
-      sameSite: "none",
+      sameSite: "lax",
       maxAge: 1000 * 60 * 60 * 24,
     },
   })

@@ -13,8 +13,8 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
   const [isSelectedOrderVisible, setIsSelectedOrderVisible] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [filters, setFilters] = useState({
-    status: "активно",
-    dateRange: "Текущий месяц",
+    status: "",
+    dateRange: "Все",
     searchText: "",
   });
 
@@ -180,6 +180,7 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
           })
         )
       );
+      setIsEditFormVisible(false);
       setOrders((prev) =>
         prev.filter((order) => !selectedOrders.includes(order.pkIdOrder))
       );

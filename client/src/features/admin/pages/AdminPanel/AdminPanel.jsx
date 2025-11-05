@@ -13,9 +13,7 @@ export const AdminPanel = () => {
       const now = new Date();
       const startDate = new Date(now.getFullYear(), now.getMonth(), 1);
       const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-      const url = `${API_URL}/v1/order?status=активно&startDate=${
-        startDate.toISOString().split("T")[0]
-      }&endDate=${endDate.toISOString().split("T")[0]}`;
+      const url = `${API_URL}/v1/order`;
 
       const response = await axios.get(url, { withCredentials: true });
       setOrders(response.data);

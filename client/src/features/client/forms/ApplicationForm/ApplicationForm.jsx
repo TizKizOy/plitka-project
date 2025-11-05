@@ -1,6 +1,6 @@
 import style from "./ApplicationForm.module.css";
 import Input from "./Input/Input";
-import services from "../../../../shared/data/servicesForm";
+import services from "../../../../shared/data/servicesForm.json";
 
 const ApplicationForm = ({
   onClick,

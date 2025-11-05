@@ -1,6 +1,6 @@
 import NavList from "../../../../../shared/components/NavList/NavList";
 import style from "./NavSidebar.module.css";
-import { navItems } from "../../../data/navItems";
+import navItems from "../../../data/navItems.json";
 
 const NavSidebar = ({ isOpen, setIsOpen }) => {
   return (

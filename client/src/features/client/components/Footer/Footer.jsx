@@ -2,7 +2,7 @@ import style from "./Footer.module.css";
 import FooterButton from "./FooterButton/FooterButton";
 import footerButtons from "../../data/footerButtons";
 import NavList from "../../../../shared/components/NavList/NavList";
-import { navItems } from "../../data/navItems";
+import navItems from "../../data/navItems.json";
 
 const Footer = () => {
   return (
