@@ -9,7 +9,7 @@
   padding: 4rem 3rem;
   z-index: 100;
   transform: translateX(100%);
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
   opacity: 0;
   pointer-events: none;
 }
@@ -124,4 +124,89 @@
 }
 .editForm__buttons button:hover {
   transform: scale(1.05);
+}
+
+@media (max-width: 992px) {
+  .editForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    max-width: 45rem;
+    max-height: 55rem;
+    overflow-y: auto;
+    padding: 2rem;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    border-radius: 2rem;
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+
+  .editForm_visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .editForm__rowItem label,
+  .editForm__commentLabel,
+  .editForm__statusLabel,
+  .editForm__statusOptions label {
+    font-size: 1.5rem;
+  }
+
+  .editForm__rowItem input,
+  .editForm__rowItemSelect {
+    font-size: 1.5rem;
+  }
+
+  .editForm__comment textarea {
+    font-size: 1.5rem;
+  }
+
+  .editForm__buttons button {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .editForm {
+    width: 80%;
+    max-width: 55rem;
+    max-height: 55rem;
+  }
+
+  .editForm_visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .editForm__rowItem label,
+  .editForm__commentLabel,
+  .editForm__statusLabel,
+  .editForm__statusOptions label {
+    font-size: 1.6rem;
+  }
+
+  .editForm__rowItem input,
+  .editForm__rowItemSelect {
+    font-size: 1.6rem;
+  }
+
+  .editForm__comment textarea {
+    font-size: 1.6rem;
+  }
+
+  .editForm__buttons button {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .editForm {
+    width: 80%;
+    max-width: 55rem;
+  }
 }

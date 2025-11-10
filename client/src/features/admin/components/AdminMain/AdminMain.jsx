@@ -9,6 +9,7 @@ import { API_URL } from "../../../../shared/utils/apiConfig";
 
 const AdminMain = ({ orders: initialOrders, setOrders }) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [isSelectedOrderVisible, setIsSelectedOrderVisible] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState([]);
@@ -86,7 +87,7 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
     if (selectedStatus === "Все") {
       status = null;
     } else {
-      status = selectedStatus === "Активные заявки" ? "активно" : "закрыто";
+      status = selectedStatus === "Активные заявки" ? "Активно" : "Закрыто";
     }
     setFilters((prev) => ({ ...prev, status }));
   };
@@ -102,10 +103,12 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
   const handleRowClick = (order) => {
     setSelectedOrder(order);
     setTimeout(() => setIsEditFormVisible(true), 0.1);
+    setIsOverlayVisible(true);
   };
 
   const handleCloseEditForm = () => {
     setIsEditFormVisible(false);
+    setIsOverlayVisible(false);
   };
   const handleCloseToolbar = () => {
     setIsSelectedOrderVisible(false);
@@ -220,6 +223,13 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
           isVisibleToolBar={isSelectedOrderVisible}
         />
       </div>
+
+      <div
+        className={`${style.overlay} ${
+          isOverlayVisible ? style.overlay_visible : ""
+        }`}
+        onClick={handleCloseEditForm}
+      />
 
       <EditForm
         key={selectedOrder?.pkIdOrder}

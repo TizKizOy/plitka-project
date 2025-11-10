@@ -12,9 +12,9 @@ const FilterSection = ({
         className={style.filterBar__select}
         onChange={onStatusChange}
         value={
-          filters.status === "активно"
+          filters.status === "Активно"
             ? "Активные заявки"
-            : filters.status === "закрыто"
+            : filters.status === "Закрыто"
             ? "Закрытые заявки"
             : "Все"
         }

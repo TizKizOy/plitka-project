@@ -20,7 +20,7 @@ const EditForm = ({
         serviceName: "",
         location: "",
         comment: "",
-        status: "активно",
+        status: "Активно",
       };
     }
     const initialServiceLabel = services.find(
@@ -51,7 +51,7 @@ const EditForm = ({
         location: formData.location,
         comment: formData.comment,
         fkIdService: fkIdService,
-        fkIdStatus: formData.status === "активно" ? "1" : "2",
+        fkIdStatus: formData.status === "Активно" ? "1" : "2",
       };
 
       const response = await axios.put(
@@ -148,8 +148,8 @@ const EditForm = ({
             <input
               type="radio"
               name="status"
-              value="активно"
-              checked={formData.status === "активно"}
+              value="Активно"
+              checked={formData.status === "Активно"}
               onChange={handleChange}
             />
             Активно
@@ -158,8 +158,8 @@ const EditForm = ({
             <input
               type="radio"
               name="status"
-              value="закрыто"
-              checked={formData.status === "закрыто"}
+              value="Закрыто"
+              checked={formData.status === "Закрыто"}
               onChange={handleChange}
             />
             Закрыто

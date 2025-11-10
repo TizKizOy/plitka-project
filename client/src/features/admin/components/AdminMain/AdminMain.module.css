@@ -8,3 +8,21 @@
   flex-direction: column;
   transition: margin-right 0.3s ease;
 }
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Полупрозрачное затемнение */
+  z-index: 100; /* Значение z-index меньше, чем у формы */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.overlay_visible {
+  opacity: 1;
+  pointer-events: auto;
+}
