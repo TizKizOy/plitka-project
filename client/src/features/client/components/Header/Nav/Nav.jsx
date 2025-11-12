@@ -14,7 +14,7 @@ const Nav = () => {
 
   return (
     <>
-      <nav className={`${style.nav} ${isSidebarOpen ? style.navHidden : ""}`}>
+      <nav className={style.nav}>
         <div>
           <p className={style.logoText}>TileHaus</p>
         </div>

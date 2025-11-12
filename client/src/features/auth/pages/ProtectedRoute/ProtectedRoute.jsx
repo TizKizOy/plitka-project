@@ -1,28 +1,8 @@
-import axios from "axios";
 import { Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-
-const isAuthenticated = async () => {
-  try {
-    const response = await axios.get("http://localhost:2020/admin/protected", {
-      withCredentials: true,
-    });
-    return !!response.data.admin;
-  } catch (error) {
-    return false;
-  }
-};
+import { useAuthCheck } from "../../hooks/useAuthCheck";
 
 export const ProtectedRoute = ({ children }) => {
-  const [isAuth, setIsAuth] = useState(null);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const authenticated = await isAuthenticated();
-      setIsAuth(authenticated);
-    };
-    checkAuth();
-  }, []);
+  const isAuth = useAuthCheck();
 
   if (isAuth === null) {
     return <h1>Проверка авторизации...</h1>;

@@ -4,7 +4,7 @@ import {
   PiTelegramLogoThin,
 } from "react-icons/pi";
 
-const footerButtons = [
+const footerButtonsData = [
   { icon: <PiPhoneCallThin />, alt: "Phone Call", href: "tel:+375331112233" },
   {
     icon: <PiTelegramLogoThin />,
@@ -18,4 +18,4 @@ const footerButtons = [
   },
 ];
 
-export default footerButtons;
+export default footerButtonsData;

@@ -1,30 +1,18 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
 import style from "./AdminPanel.module.css";
 import AdminNav from "../../components/AdminNav/AdminNav";
 import AdminMain from "../../components/AdminMain/AdminMain";
-import { API_URL } from "../../../../shared/utils/apiConfig";
+import { useOrders } from "../../hooks/useOrders";
 
 export const AdminPanel = () => {
-  const [orders, setOrders] = useState([]);
+  const { orders, setOrders, isLoading, error } = useOrders();
 
-  const getOrders = async () => {
-    try {
-      const now = new Date();
-      const startDate = new Date(now.getFullYear(), now.getMonth(), 1);
-      const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-      const url = `${API_URL}/v1/order`;
+  if (isLoading) {
+    return <div>Загрузка данных...</div>;
+  }
 
-      const response = await axios.get(url, { withCredentials: true });
-      setOrders(response.data);
-    } catch (error) {
-      console.error("Ошибка при получении данных:", error.message);
-    }
-  };
-
-  useEffect(() => {
-    getOrders();
-  }, []);
+  if (error) {
+    return <div>Ошибка при загрузке данных: {error}</div>;
+  }
 
   return (
     <>

@@ -10,13 +10,17 @@ export const validateForm = (data) => {
   if (!data.firstName.trim()) {
     newErrors.firstName = "Имя обязательно для заполнения";
     isValid = false;
+  } else if (!/^[а-яА-ЯёЁa-zA-Z-]+$/.test(data.firstName)) {
+    newErrors.firstName = "Имя может содержать только буквы и дефис";
+    isValid = false;
   }
 
   if (!data.phone.trim()) {
     newErrors.phone = "Телефон обязателен для заполнения";
     isValid = false;
-  } else if (!/^\+?\d{9,30}$/.test(data.phone)) {
-    newErrors.phone = "Некорректный формат телефона";
+  } else if (!/^(\+375\d{9}|\+7\d{10}|\+48\d{9})$/.test(data.phone)) {
+    newErrors.phone =
+      "Некорректный формат телефона. Примеры: +375291234567 (Беларусь)";
     isValid = false;
   }
 

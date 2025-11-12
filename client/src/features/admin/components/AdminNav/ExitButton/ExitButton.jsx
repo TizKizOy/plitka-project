@@ -1,32 +1,16 @@
 import style from "./ExitButton.module.css";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
-const api_url = "http://localhost:2020";
+import { useLogout } from "../../../hooks/useLogout";
 
 const ExitButton = () => {
-  const navigate = useNavigate();
-
-  const handlerExit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(
-        `${api_url}/admin/logout`,
-        {},
-        { withCredentials: true }
-      );
-      document.cookie =
-        "connect.sid=; Max-Age=0; Path=/; Secure; SameSite=Strict";
-      navigate("/admin/login");
-    } catch (error) {
-      setError("Не удалось выйти. Попробуйте позже.");
-    }
-  };
+  const { handleLogout, error } = useLogout();
 
   return (
-    <button onClick={handlerExit} className={style.exit}>
-      Выйти
-    </button>
+    <>
+      {error && <p className={style.error}>{error}</p>}
+      <button onClick={handleLogout} className={style.exit}>
+        Выйти
+      </button>
+    </>
   );
 };
 
