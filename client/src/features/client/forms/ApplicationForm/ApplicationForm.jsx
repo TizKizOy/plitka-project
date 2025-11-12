@@ -1,6 +1,7 @@
 import style from "./ApplicationForm.module.css";
 import Input from "./Input/Input";
-import services from "../../../../shared/data/servicesForm";
+import services from "../../../../shared/data/servicesForm.json";
+import { VscClose } from "react-icons/vsc";
 
 const ApplicationForm = ({
   onClick,
@@ -8,14 +9,19 @@ const ApplicationForm = ({
   handleInputChange,
   data,
   errors,
+  isLoading = false,
 }) => {
   return (
     <>
       <div className={style.overlay} onClick={() => onClick(false)} />
       <div className={style.formContainer}>
         <div style={{ position: "relative" }}>
-          <button className={style.closeButton} onClick={() => onClick(false)}>
-            &times;
+          <button
+            className={style.closeButton}
+            onClick={() => onClick(false)}
+            disabled={isLoading}
+          >
+            <VscClose size={32} />
           </button>
           <div className={style.formCard}>
             <h2>Оставить заявку</h2>
@@ -24,8 +30,8 @@ const ApplicationForm = ({
               <Input
                 name="firstName"
                 placeholder="Имя"
-                data={data}
-                handleInputChange={handleInputChange}
+                value={data.firstName}
+                onChange={(e) => handleInputChange(e, "firstName")}
                 error={errors.firstName}
               />
               <Input
@@ -33,26 +39,30 @@ const ApplicationForm = ({
                 placeholder="Выберите услугу"
                 type="select"
                 options={services}
-                data={data}
-                handleInputChange={handleInputChange}
+                value={data.fkIdService}
+                onChange={(e) => handleInputChange(e, "fkIdService")}
                 error={errors.fkIdService}
               />
               <Input
                 name="location"
-                placeholder="Местонахождение, расстояние от МКАД"
-                data={data}
-                handleInputChange={handleInputChange}
+                placeholder="Месторасположение, расстояние от МКАД"
+                value={data.location}
+                onChange={(e) => handleInputChange(e, "location")}
                 error={errors.location}
               />
               <Input
                 name="phone"
                 placeholder="Номер телефона"
-                data={data}
-                handleInputChange={handleInputChange}
+                value={data.phone}
+                onChange={(e) => handleInputChange(e, "phone")}
                 error={errors.phone}
               />
-              <button className={style.submitButton} type="submit">
-                Отправить
+              <button
+                className={style.submitButton}
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? "Отправка..." : "Отправить"}
               </button>
             </form>
           </div>

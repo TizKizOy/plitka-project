@@ -1,4 +1,5 @@
-node_modules
 Задача.txt
 Схемы
+node_modules
 .env
+dist

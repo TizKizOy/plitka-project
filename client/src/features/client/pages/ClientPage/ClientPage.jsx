@@ -1,32 +1,25 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./ClientPage.module.css";
 import ApplicationForm from "../../forms/ApplicationForm/ApplicationForm";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Main from "../../components/Main/Main";
 import MessageAfterAppForm from "../../forms/MessageAfterAppForm/MessageAfterAppForm";
-import { validateForm } from "../../utils/validation";
-import axios from "axios";
-import { API_URL } from "../../../../shared/utils/apiConfig";
+import { useApplicationForm } from "../../hooks/useApplicationForm";
 
 export const ClientPage = () => {
-  const [appFormIsVisible, setAppFormIsVisible] = useState(false);
-  const [messageIsVisible, setMessageIsVisible] = useState(false);
-  const [data, setData] = useState({
-    firstName: "",
-    phone: "",
-    location: "",
-    fkIdService: "",
-    fkIdStatus: "1",
-  });
-  const [errors, setErrors] = useState({
-    firstName: "",
-    phone: "",
-    location: "",
-    fkIdService: "",
-    fkIdStatus: "1",
-  });
+  const {
+    data,
+    errors,
+    appFormIsVisible,
+    messageIsVisible,
+    isLoading,
+    apiError,
+    setAppFormIsVisible,
+    setMessageIsVisible,
+    handleInputChange,
+    handleSubmit,
+  } = useApplicationForm();
 
   useEffect(() => {
     if (appFormIsVisible || messageIsVisible) {
@@ -39,37 +32,6 @@ export const ClientPage = () => {
     };
   }, [appFormIsVisible, messageIsVisible]);
 
-  const handleInputChange = (e, name) => {
-    setData({ ...data, [name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { isValid, errors: newErrors } = validateForm(data);
-    setErrors(newErrors);
-    if (isValid) {
-      setAppFormIsVisible(false);
-      axios
-        .post(`${API_URL}/v1/order`, data, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-        .then(() => {
-          setData({
-            firstName: "",
-            phone: "",
-            location: "",
-            fkIdService: "",
-          });
-          setMessageIsVisible(true);
-        })
-        .catch((error) => {
-          console.error("Ошибка:", error);
-          alert("Произошла ошибка при отправке формы. Попробуйте позже.");
-        });
-    }
-  };
   return (
     <>
       {appFormIsVisible && (
@@ -78,13 +40,15 @@ export const ClientPage = () => {
           data={data}
           errors={errors}
           handleSubmit={handleSubmit}
-          onClick={setAppFormIsVisible}
+          onClick={() => setAppFormIsVisible(false)}
+          isLoading={isLoading}
         />
       )}
       {messageIsVisible && (
-        <MessageAfterAppForm onClick={setMessageIsVisible} />
+        <MessageAfterAppForm onClick={() => setMessageIsVisible(false)} />
       )}
-      <Header onClick={setAppFormIsVisible} />
+      {apiError && <div className="error-message">{apiError}</div>}
+      <Header onClick={() => setAppFormIsVisible(true)} />
       <Main />
       <Footer />
     </>

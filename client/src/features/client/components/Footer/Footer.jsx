@@ -1,8 +1,8 @@
 import style from "./Footer.module.css";
 import FooterButton from "./FooterButton/FooterButton";
-import footerButtons from "../../data/footerButtons";
+import footerButtonsData from "../../data/footerButtonsData";
 import NavList from "../../../../shared/components/NavList/NavList";
-import { navItems } from "../../data/navItems";
+import navItems from "../../data/navItems.json";
 
 const Footer = () => {
   return (
@@ -15,7 +15,7 @@ const Footer = () => {
         linkStyle={style.listLink}
       />
       <div className={style.footerButtons}>
-        {footerButtons.map((button, index) => (
+        {footerButtonsData.map((button, index) => (
           <FooterButton key={index} href={button.href}>
             {button.icon}
           </FooterButton>

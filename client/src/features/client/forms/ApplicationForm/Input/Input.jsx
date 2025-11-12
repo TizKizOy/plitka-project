@@ -3,43 +3,47 @@ import style from "./Input.module.css";
 const Input = ({
   type = "text",
   placeholder,
-  options,
-  handleInputChange,
-  data,
+  options = [],
+  value = "",
+  onChange,
   name,
-  error,
+  error = "",
 }) => {
+  const handleChange = (e) => {
+    onChange(e, name);
+  };
+
   return (
     <div
       className={`${style.inputGroup} ${
         type === "select" ? style.selectGroup : ""
-      }`}
+      } ${error ? style.inputGroupError : ""}`}
     >
       {type === "select" ? (
         <select
-          className={style.input}
-          value={data[name] || ""}
-          onChange={(e) => handleInputChange(e, name)}
+          className={`${style.input} ${error ? style.inputError : ""}`}
+          value={value}
+          onChange={handleChange}
           required
         >
           <option value="" disabled hidden>
             {placeholder}
           </option>
-          {options.map((option, index) => (
-            <option key={index} value={option.value}>
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
         </select>
       ) : (
         <input
-          min={2}
-          maxLength={128}
-          className={style.input}
+          className={`${style.input} ${error ? style.inputError : ""}`}
           type={type}
-          value={data[name] || ""}
-          onChange={(e) => handleInputChange(e, name)}
+          value={value}
+          onChange={handleChange}
           placeholder={placeholder}
+          minLength={type === "text" ? 2 : undefined}
+          maxLength={128}
         />
       )}
       {error && <span className={style.error}>{error}</span>}

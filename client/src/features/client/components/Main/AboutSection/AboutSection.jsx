@@ -1,8 +1,8 @@
 import style from "./AboutSection.module.css";
 
-import AboutUsLeft from "../../../../../assets/image/AboutUsLeft.jpg";
-import AboutUsCenter from "../../../../../assets/image/AboutUsCenter.jpg";
-import AboutUsRight from "../../../../../assets/image/AboutUsRight.jpg";
+import AboutUsLeft from "/image/AboutUsLeft.webp";
+import AboutUsCenter from "/image/AboutUsCenter.webp";
+import AboutUsRight from "/image/AboutUsRight.webp";
 
 const AboutSection = () => {
   return (

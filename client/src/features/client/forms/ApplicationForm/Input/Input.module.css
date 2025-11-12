@@ -1,6 +1,7 @@
 .inputGroup {
   margin-bottom: 1.2rem;
   position: relative;
+  margin-top: 1rem;
 }
 
 .selectGroup::after {
@@ -44,12 +45,18 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   transition: transform 0.2s ease;
+  margin-bottom: 0.5rem;
 }
 
 .inputGroup input:hover,
 .inputGroup select:hover,
 .inputGroup select:active {
   transform: scale(1.02);
+}
+
+.inputGroupError span {
+  font-size: 1.2rem;
+  color: #646464;
 }
 
 @media (max-width: 425px) {

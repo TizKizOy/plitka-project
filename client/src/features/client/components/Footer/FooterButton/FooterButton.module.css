@@ -10,3 +10,9 @@
 .footButton:not(:last-child) {
   margin-right: 4rem;
 }
+.footButton svg {
+  transition: transform 0.3s ease;
+}
+.footButton svg:hover {
+  transform: scale(1.15);
+}
