@@ -1,3 +1,12 @@
+@keyframes highlightAnimation {
+  0% {
+    background-color: rgba(255, 255, 0, 0.5);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
 .table {
   border-radius: 2rem;
   background-color: white;
@@ -9,6 +18,10 @@
   transition: margin-top 0.3s ease-in-out;
   font-size: 1.6rem;
   font-weight: 300;
+}
+
+.highlightedRow {
+  animation: highlightAnimation 1s ease-in-out;
 }
 
 .table_down {

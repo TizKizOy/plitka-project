@@ -7,6 +7,7 @@ const OrdersSection = ({
   selectedOrders,
   onCheckboxChange,
   isVisibleToolBar,
+  highlightedRows,
 }) => {
   return (
     <div
@@ -27,7 +28,11 @@ const OrdersSection = ({
         {orders.map((order) => (
           <div
             key={order.pkIdOrder}
-            className={style.table__row}
+            className={`${style.table__row} ${
+              highlightedRows.includes(order.pkIdOrder)
+                ? style.highlightedRow
+                : ""
+            }`}
             onClick={() => onRowClick(order)}
           >
             <div className={style.table__checkbox}>

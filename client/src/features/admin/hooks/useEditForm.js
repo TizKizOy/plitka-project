@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import services from "../../../shared/data/servicesForm.json";
 import { API_URL } from "../../../shared/utils/apiConfig";
-
 export const useEditForm = ({
   order,
   initialServiceName,
@@ -29,12 +28,10 @@ export const useEditForm = ({
       serviceName: initialServiceLabel || order.serviceName || "",
     };
   });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleSubmit = async () => {
     try {
       const selectedService = services.find(
@@ -66,6 +63,5 @@ export const useEditForm = ({
       console.error("Ошибка при сохранении:", error);
     }
   };
-
   return { formData, handleChange, handleSubmit };
 };

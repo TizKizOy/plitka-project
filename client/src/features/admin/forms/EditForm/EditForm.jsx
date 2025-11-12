@@ -1,6 +1,8 @@
-import { useEditForm } from "../../hooks/useEditForm";
+import { useState } from "react";
+import axios from "axios";
 import style from "./EditForm.module.css";
-import services from "../../../../shared/data/servicesForm.json";
+import services from "../../../../shared/data/servicesForm";
+import { API_URL } from "../../../../shared/utils/apiConfig";
 
 const EditForm = ({
   order,
@@ -9,14 +11,68 @@ const EditForm = ({
   isVisible,
   initialServiceName,
   fetchOrders,
+  highlightRows,
 }) => {
-  const { formData, handleChange, handleSubmit } = useEditForm({
-    order,
-    initialServiceName,
-    onClose,
-    setOrders,
-    fetchOrders,
+  const [formData, setFormData] = useState(() => {
+    if (!order) {
+      return {
+        firstName: "",
+        phone: "",
+        serviceName: "",
+        location: "",
+        comment: "",
+        status: "Активно",
+      };
+    }
+    const initialServiceLabel = services.find(
+      (s) => s.value === order.serviceName
+    )?.label;
+    return {
+      ...order,
+      serviceName: initialServiceName || order.serviceName || "",
+    };
   });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const selectedService = services.find(
+        (s) => s.label === formData.serviceName
+      );
+      const fkIdService = selectedService ? selectedService.value : "";
+      const reqData = {
+        pkIdOrder: formData.pkIdOrder,
+        firstName: formData.firstName,
+        phone: formData.phone,
+        location: formData.location,
+        comment: formData.comment,
+        fkIdService: fkIdService,
+        fkIdStatus: formData.status === "Активно" ? "1" : "2",
+      };
+      const response = await axios.put(
+        `${API_URL}/v1/order/${order.pkIdOrder}`,
+        reqData,
+        { withCredentials: true }
+      );
+
+      setOrders((prev) =>
+        prev.map((o) =>
+          o.pkIdOrder === order.pkIdOrder ? { ...o, ...formData } : o
+        )
+      );
+
+      highlightRows([order.pkIdOrder]);
+
+      await fetchOrders();
+      onClose();
+    } catch (error) {
+      console.error("Ошибка при сохранении:", error);
+    }
+  };
 
   return (
     <div

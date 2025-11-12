@@ -1,3 +1,4 @@
+import { useState } from "react";
 import EditForm from "../../forms/EditForm/EditForm";
 import style from "./AdminMain.module.css";
 import FilterSection from "./FilterSection/FilterSection";
@@ -6,8 +7,19 @@ import SelectedOrdersToolbar from "./SelectedOrdersToolbar/SelectedOrdersToolbar
 import { useOrdersFilters } from "../../hooks/useOrdersFilters";
 import { useOrdersSelection } from "../../hooks/useOrdersSelection";
 import { useEditFormOverlay } from "../../hooks/useEditFormOverlay";
+import { useHighlightRows } from "../../hooks/useHighlightRows";
 
 const AdminMain = ({ orders: initialOrders, setOrders }) => {
+  const {
+    selectedOrder,
+    isOverlayVisible,
+    isEditFormVisible,
+    handleRowClick,
+    handleCloseEditForm,
+  } = useEditFormOverlay();
+
+  const { highlightedRows, highlightRows } = useHighlightRows();
+
   const {
     filters,
     fetchOrders,
@@ -24,15 +36,7 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
     onSetStatusActive,
     onDeleteOrder,
     handleCloseToolbar,
-  } = useOrdersSelection(setOrders);
-
-  const {
-    selectedOrder,
-    isOverlayVisible,
-    isEditFormVisible,
-    handleRowClick,
-    handleCloseEditForm,
-  } = useEditFormOverlay();
+  } = useOrdersSelection(setOrders, highlightRows);
 
   return (
     <>
@@ -57,6 +61,7 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
           selectedOrders={selectedOrders}
           onCheckboxChange={handleCheckboxChange}
           isVisibleToolBar={isSelectedOrderVisible}
+          highlightedRows={highlightedRows}
         />
       </div>
       <div
@@ -72,6 +77,7 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
         onClose={handleCloseEditForm}
         isVisible={isEditFormVisible}
         fetchOrders={fetchOrders}
+        highlightRows={highlightRows}
       />
     </>
   );

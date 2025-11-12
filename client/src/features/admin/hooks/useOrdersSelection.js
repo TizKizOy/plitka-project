@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_URL } from "../../../shared/utils/apiConfig";
-
-export const useOrdersSelection = (setOrders) => {
+export const useOrdersSelection = (setOrders, highlightRows) => {
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [isSelectedOrderVisible, setIsSelectedOrderVisible] = useState(false);
-
   useEffect(() => {
     setIsSelectedOrderVisible(selectedOrders.length > 0);
   }, [selectedOrders]);
-
   const handleCheckboxChange = (e, orderId) => {
     e.stopPropagation();
     setSelectedOrders((prev) =>
@@ -18,7 +15,6 @@ export const useOrdersSelection = (setOrders) => {
         : [...prev, orderId]
     );
   };
-
   const onSetStatusClosed = async () => {
     try {
       await Promise.all(
@@ -33,16 +29,16 @@ export const useOrdersSelection = (setOrders) => {
       setOrders((el) =>
         el.map((order) =>
           selectedOrders.includes(order.pkIdOrder)
-            ? { ...order, status: "Активно" }
+            ? { ...order, status: "активно" }
             : order
         )
       );
+      highlightRows(selectedOrders);
       setSelectedOrders([]);
     } catch (error) {
       console.error("Ошибка при блокировке:", error);
     }
   };
-
   const onSetStatusActive = async () => {
     try {
       await Promise.all(
@@ -57,16 +53,16 @@ export const useOrdersSelection = (setOrders) => {
       setOrders((el) =>
         el.map((order) =>
           selectedOrders.includes(order.pkIdOrder)
-            ? { ...order, status: "Закрыто" }
+            ? { ...order, status: "закрыто" }
             : order
         )
       );
+      highlightRows(selectedOrders);
       setSelectedOrders([]);
     } catch (error) {
       console.error("Ошибка при активации:", error);
     }
   };
-
   const onDeleteOrder = async () => {
     try {
       await Promise.all(
@@ -84,12 +80,10 @@ export const useOrdersSelection = (setOrders) => {
       console.error("Ошибка при удалении:", error);
     }
   };
-
   const handleCloseToolbar = () => {
     setIsSelectedOrderVisible(false);
     setSelectedOrders([]);
   };
-
   return {
     selectedOrders,
     isSelectedOrderVisible,
