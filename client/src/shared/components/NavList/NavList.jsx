@@ -1,5 +1,3 @@
-import style from "./NavList.module.css";
-
 const NavList = ({
   items,
   listStyle,

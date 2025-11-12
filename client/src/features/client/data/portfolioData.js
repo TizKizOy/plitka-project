@@ -1,7 +1,7 @@
-import portfolioRoad from "/assets/image/portfolioRoad.png";
-import portfolioGlass from "/assets/image/portfolioGlass.png";
-import portfolioPlatform from "/assets/image/portfolioPlatform.png";
-import portfolioTerritory from "/assets/image/portfolioTerritory.png";
+import portfolioRoad from "/image/portfolioRoad.webp";
+import portfolioGlass from "/image/portfolioGlass.webp";
+import portfolioPlatform from "/image/portfolioPlatform.webp";
+import portfolioTerritory from "/image/portfolioTerritory.webp";
 
 
 const portfolioData = [
