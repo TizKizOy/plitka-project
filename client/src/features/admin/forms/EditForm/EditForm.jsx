@@ -3,6 +3,7 @@ import axios from "axios";
 import style from "./EditForm.module.css";
 import services from "../../../../shared/data/servicesForm";
 import { API_URL } from "../../../../shared/utils/apiConfig";
+import { useEditForm } from "../../hooks/useEditForm";
 
 const EditForm = ({
   order,
@@ -13,66 +14,14 @@ const EditForm = ({
   fetchOrders,
   highlightRows,
 }) => {
-  const [formData, setFormData] = useState(() => {
-    if (!order) {
-      return {
-        firstName: "",
-        phone: "",
-        serviceName: "",
-        location: "",
-        comment: "",
-        status: "Активно",
-      };
-    }
-    const initialServiceLabel = services.find(
-      (s) => s.value === order.serviceName
-    )?.label;
-    return {
-      ...order,
-      serviceName: initialServiceName || order.serviceName || "",
-    };
+  const { formData, handleChange, handleSubmit, changedFields } = useEditForm({
+    order,
+    initialServiceName,
+    onClose,
+    setOrders,
+    fetchOrders,
+    highlightRows,
   });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = async () => {
-    try {
-      const selectedService = services.find(
-        (s) => s.label === formData.serviceName
-      );
-      const fkIdService = selectedService ? selectedService.value : "";
-      const reqData = {
-        pkIdOrder: formData.pkIdOrder,
-        firstName: formData.firstName,
-        phone: formData.phone,
-        location: formData.location,
-        comment: formData.comment,
-        fkIdService: fkIdService,
-        fkIdStatus: formData.status === "Активно" ? "1" : "2",
-      };
-      const response = await axios.put(
-        `${API_URL}/v1/order/${order.pkIdOrder}`,
-        reqData,
-        { withCredentials: true }
-      );
-
-      setOrders((prev) =>
-        prev.map((o) =>
-          o.pkIdOrder === order.pkIdOrder ? { ...o, ...formData } : o
-        )
-      );
-
-      highlightRows([order.pkIdOrder]);
-
-      await fetchOrders();
-      onClose();
-    } catch (error) {
-      console.error("Ошибка при сохранении:", error);
-    }
-  };
 
   return (
     <div
@@ -91,6 +40,7 @@ const EditForm = ({
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
+            className={changedFields.firstName ? style.changedField : ""}
           />
         </div>
         <div className={style.editForm__rowItem}>
@@ -102,6 +52,7 @@ const EditForm = ({
             name="phone"
             value={formData.phone}
             onChange={handleChange}
+            className={changedFields.phone ? style.changedField : ""}
           />
         </div>
       </div>
@@ -109,7 +60,9 @@ const EditForm = ({
         <div className={style.editForm__rowItem}>
           <label>Услуга</label>
           <select
-            className={style.editForm__rowItemSelect}
+            className={`${style.editForm__rowItemSelect} ${
+              changedFields.serviceName ? style.changedField : ""
+            }`}
             name="serviceName"
             value={formData.serviceName || ""}
             onChange={handleChange}
@@ -130,6 +83,7 @@ const EditForm = ({
             name="location"
             value={formData.location}
             onChange={handleChange}
+            className={changedFields.location ? style.changedField : ""}
           />
         </div>
       </div>
@@ -139,6 +93,7 @@ const EditForm = ({
           name="comment"
           value={formData.comment || ""}
           onChange={handleChange}
+          className={changedFields.comment ? style.changedField : ""}
         />
       </div>
       <div className={style.editForm__status}>

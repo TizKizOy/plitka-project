@@ -18,7 +18,7 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
     handleCloseEditForm,
   } = useEditFormOverlay();
 
-  const { highlightedRows, highlightRows } = useHighlightRows();
+  const { highlightedRows, highlightRows, highlightType } = useHighlightRows();
 
   const {
     filters,
@@ -36,6 +36,7 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
     onSetStatusActive,
     onDeleteOrder,
     handleCloseToolbar,
+    deletingRowIds,
   } = useOrdersSelection(setOrders, highlightRows);
 
   return (
@@ -62,6 +63,8 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
           onCheckboxChange={handleCheckboxChange}
           isVisibleToolBar={isSelectedOrderVisible}
           highlightedRows={highlightedRows}
+          deletingRowIds={deletingRowIds}
+          highlightType={highlightType}
         />
       </div>
       <div

@@ -1,10 +1,27 @@
 @keyframes highlightAnimation {
   0% {
-    background-color: rgba(255, 255, 0, 0.5);
+    background-color: rgba(255, 255, 0, 0.356);
   }
   100% {
     background-color: transparent;
   }
+}
+
+@keyframes highlightAnimationDelete {
+  0% {
+    background-color: rgba(255, 0, 0, 0.356);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.highlightedRow {
+  animation: highlightAnimation 1s ease-in-out;
+}
+
+.deletingRow {
+  animation: highlightAnimationDelete 1s ease-in-out;
 }
 
 .table {
@@ -18,10 +35,6 @@
   transition: margin-top 0.3s ease-in-out;
   font-size: 1.6rem;
   font-weight: 300;
-}
-
-.highlightedRow {
-  animation: highlightAnimation 1s ease-in-out;
 }
 
 .table_down {
