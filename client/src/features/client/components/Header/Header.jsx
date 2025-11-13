@@ -9,7 +9,9 @@ const Header = ({ onClick }) => {
     <BackgroundLayout>
       <div className={style.content}>
         <Nav />
-        <TopSection onClick={onClick} />
+        <div className={style.animation}>
+          <TopSection onClick={onClick} />
+        </div>
         <StatsSection />
       </div>
     </BackgroundLayout>

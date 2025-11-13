@@ -1,14 +1,47 @@
-import WhyChooseUsCards from "./WhyChooseUsCards/WhyChooseUsCards";
+import { useEffect, useRef } from "react";
 import style from "./WhyChooseUsSection.module.css";
+import WhyChooseUsCards from "./WhyChooseUsCards/WhyChooseUsCards";
 
 const WhyChooseUsSection = () => {
+  const titleRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const cardsContainerRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(style.visible);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (titleRef.current) observer.observe(titleRef.current);
+    if (subtitleRef.current) observer.observe(subtitleRef.current);
+    if (cardsContainerRef.current) observer.observe(cardsContainerRef.current);
+
+    return () => {
+      if (titleRef.current) observer.unobserve(titleRef.current);
+      if (subtitleRef.current) observer.unobserve(subtitleRef.current);
+      if (cardsContainerRef.current)
+        observer.unobserve(cardsContainerRef.current);
+    };
+  }, []);
+
   return (
     <div className={style.container}>
       <div className={style.textContainer}>
-        <h3 className={style.title}>качество и мастерство</h3>
-        <h2 className={style.subtitle}>ПОЧЕМУ НАС ВЫБИРАЮТ</h2>
+        <h3 ref={titleRef} className={style.title}>
+          качество и мастерство
+        </h3>
+        <h2 ref={subtitleRef} className={style.subtitle}>
+          ПОЧЕМУ НАС ВЫБИРАЮТ
+        </h2>
       </div>
-      <div>
+      <div ref={cardsContainerRef} className={style.whyChooseUsCardsContainer}>
         <WhyChooseUsCards />
       </div>
     </div>

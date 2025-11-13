@@ -47,7 +47,6 @@ export const ClientPage = () => {
       {messageIsVisible && (
         <MessageAfterAppForm onClick={() => setMessageIsVisible(false)} />
       )}
-      {apiError && <div className="error-message">{apiError}</div>}
       <Header onClick={() => setAppFormIsVisible(true)} />
       <Main />
       <Footer />
