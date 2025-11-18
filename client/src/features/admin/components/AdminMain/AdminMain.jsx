@@ -1,9 +1,9 @@
-import { useState } from "react";
 import EditForm from "../../forms/EditForm/EditForm";
 import style from "./AdminMain.module.css";
 import FilterSection from "./FilterSection/FilterSection";
 import OrdersSection from "./OrdersSection/OrdersSection";
 import SelectedOrdersToolbar from "./SelectedOrdersToolbar/SelectedOrdersToolbar";
+import FloatingActionButton from "./FloatingActionButton/FloatingActionButton";
 import { useOrdersFilters } from "../../hooks/useOrdersFilters";
 import { useOrdersSelection } from "../../hooks/useOrdersSelection";
 import { useEditFormOverlay } from "../../hooks/useEditFormOverlay";
@@ -50,6 +50,13 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
         />
         <SelectedOrdersToolbar
           selectedOrdersCount={selectedOrders.length}
+          onSetStatusClosed={onSetStatusClosed}
+          onSetStatusActive={onSetStatusActive}
+          onDeleteOrder={onDeleteOrder}
+          onClose={handleCloseToolbar}
+          isVisible={isSelectedOrderVisible}
+        />
+        <FloatingActionButton
           onSetStatusClosed={onSetStatusClosed}
           onSetStatusActive={onSetStatusActive}
           onDeleteOrder={onDeleteOrder}

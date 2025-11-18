@@ -1,48 +1,56 @@
-import { useEffect, useRef } from "react";
 import style from "./PortfolioSection.module.css";
-import PortfolioCards from "./PortfolioCards/PortfolioCards";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
+import PortfolioCard from "./PortfolioCard/PortfolioCard";
+import portfolioData from "../../../data/portfolioData.json";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 const PortfolioSection = () => {
-  const titleRef = useRef(null);
-  const subtitleRef = useRef(null);
-  const cardsContainerRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add(style.visible);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (titleRef.current) observer.observe(titleRef.current);
-    if (subtitleRef.current) observer.observe(subtitleRef.current);
-    if (cardsContainerRef.current) observer.observe(cardsContainerRef.current);
-
-    return () => {
-      if (titleRef.current) observer.unobserve(titleRef.current);
-      if (subtitleRef.current) observer.unobserve(subtitleRef.current);
-      if (cardsContainerRef.current)
-        observer.unobserve(cardsContainerRef.current);
-    };
-  }, []);
-
   return (
     <div id="portfolioSection" className={style.container}>
       <div className={style.textContainer}>
-        <h3 ref={titleRef} className={style.title}>
-          результат и гарантия
-        </h3>
-        <h2 ref={subtitleRef} className={style.subtitle}>
-          ПРИМЕРЫ НАШИХ РАБОТ
-        </h2>
+        <h3 className={style.title}>результат и гарантия</h3>
+        <h2 className={style.subtitle}>ПРИМЕРЫ НАШИХ РАБОТ</h2>
       </div>
-      <div ref={cardsContainerRef} className={style.portfolioCardsContainer}>
-        <PortfolioCards />
+      <div className={style.sliderContainer}>
+        <Swiper
+          modules={[Navigation]}
+          spaceBetween={50}
+          slidesPerView={2}
+          centeredSlides={false}
+          centeredSlidesBounds={true}
+          loop={true}
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+            },
+            577: {
+              slidesPerView: 2,
+            },
+          }}
+          navigation={{
+            nextEl: `.${style.customNavButtonNext}`,
+            prevEl: `.${style.customNavButtonPrev}`,
+          }}
+        >
+          {portfolioData.map((el) => (
+            <SwiperSlide
+              key={el.id}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <PortfolioCard img={el.image} title={el.title} text={el.text} />
+            </SwiperSlide>
+          ))}
+
+          <div className={style.customNavButtonPrev}>
+            <MdKeyboardArrowLeft size={33} />
+          </div>
+          <div className={style.customNavButtonNext}>
+            <MdKeyboardArrowRight size={33} />
+          </div>
+        </Swiper>
       </div>
     </div>
   );

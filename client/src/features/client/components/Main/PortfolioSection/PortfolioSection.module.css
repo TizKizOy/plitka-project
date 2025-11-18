@@ -1,36 +1,53 @@
 .title {
   text-transform: lowercase;
-  opacity: 0;
-  transform: translateY(-20%);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.title.visible {
-  opacity: 1;
-  transform: translateY(0%);
 }
 
 .subtitle {
   text-transform: uppercase;
-  opacity: 0;
-  transform: translateY(-20%);
-  transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
 }
 
-.subtitle.visible {
-  opacity: 1;
-  transform: translateY(0%);
+.sliderContainer {
+  position: relative;
+  width: 100%;
 }
 
-.portfolioCardsContainer {
-  opacity: 0;
-  transform: translateY(20%);
-  transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+.swiper {
+  width: 100%;
+  padding: 0 50px;
+  box-sizing: border-box;
 }
 
-.portfolioCardsContainer.visible {
-  opacity: 1;
-  transform: translateY(0%);
+.customNavButtonPrev,
+.customNavButtonNext {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4.5rem;
+  height: 4.5rem;
+  background-color: #ccccccdc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  color: #000;
+  font-size: 3rem;
+  user-select: none;
+  transition: background-color 0.5s ease;
+}
+
+.customNavButtonPrev {
+  left: 10px;
+}
+
+.customNavButtonNext {
+  right: 10px;
+}
+
+.customNavButtonPrev:hover,
+.customNavButtonNext:hover {
+  background-color: #b6b6b6dc;
 }
 
 @media (max-width: 576px) {

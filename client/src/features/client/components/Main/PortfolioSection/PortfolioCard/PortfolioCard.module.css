@@ -1,13 +1,12 @@
 .card {
-  width: 47%;
+  width: 100%;
+  min-height: 50%;
   background: #fff;
   transition: transform 0.3s ease;
-  border-radius: 4.5rem;
+  border-radius: 5rem;
   overflow: hidden;
 }
-.card:hover {
-  transform: scale(1.03);
-}
+
 .image {
   width: 100%;
   margin-bottom: 1rem;
@@ -28,9 +27,6 @@
 }
 
 @media (max-width: 992px) {
-  .card {
-    width: 45%;
-  }
   .textContainer {
     padding: 0 2rem 5rem 2rem;
   }
@@ -46,9 +42,6 @@
 }
 
 @media (max-width: 425px) {
-  .card {
-    width: 90%;
-  }
   .image {
     height: 21rem;
   }

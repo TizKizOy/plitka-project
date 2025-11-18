@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import "./ClientPage.module.css";
+import { useEffect } from "react";
 import ApplicationForm from "../../forms/ApplicationForm/ApplicationForm";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
