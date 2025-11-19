@@ -23,7 +23,7 @@ const OrdersSection = ({
         <div>Локация, км</div>
         <div>Телефон</div>
         <div>Статус</div>
-        <div>Комментарий</div>
+        <div>Комментарий админа</div>
       </div>
       <div className={style.table__list}>
         {orders.map((order) => (
@@ -73,7 +73,7 @@ const OrdersSection = ({
               <p>{order.status || "активно"}</p>
             </div>
             <div className={style.table__comment}>
-              <span>Комментарий</span>
+              <span>Комментарий админа</span>
               <p>{order.comment || "Отсутствует"}</p>
             </div>
           </div>

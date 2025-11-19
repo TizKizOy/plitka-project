@@ -85,7 +85,9 @@ const EditForm = ({
         </div>
       </div>
       <div className={style.editForm__comment}>
-        <label className={style.editForm__commentLabel}>Комментарий</label>
+        <label className={style.editForm__commentLabel}>
+          Комментарий админа
+        </label>
         <textarea
           name="comment"
           value={formData.comment || ""}
