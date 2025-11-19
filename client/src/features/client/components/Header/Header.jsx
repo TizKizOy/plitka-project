@@ -7,8 +7,8 @@ import BackgroundLayout from "../../../../shared/components/BackgroundLayout/Bac
 const Header = ({ onClick }) => {
   return (
     <BackgroundLayout>
+      <Nav />
       <div className={style.content}>
-        <Nav />
         <div className={style.animation}>
           <TopSection onClick={onClick} />
         </div>
