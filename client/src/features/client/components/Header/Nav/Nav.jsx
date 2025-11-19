@@ -16,7 +16,9 @@ const Nav = () => {
     <>
       <nav className={style.nav}>
         <div>
-          <p className={style.logoText}>TileHaus</p>
+          <p className={style.logoText} onClick={() => location.reload()}>
+            TileHaus
+          </p>
         </div>
         <NavList
           items={navItems}

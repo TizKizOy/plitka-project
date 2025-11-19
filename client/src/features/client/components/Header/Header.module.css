@@ -22,11 +22,11 @@
 .content {
   position: relative;
   z-index: 2;
-  padding-top: 16rem;
+  padding-top: 15rem;
 }
 
 @media (max-width: 425px) {
   .content {
-    padding-top: 14rem;
+    padding-top: 13rem;
   }
 }

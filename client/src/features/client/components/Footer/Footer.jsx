@@ -33,7 +33,9 @@ const Footer = () => {
 
   return (
     <div id="footer" className={style.footerContainer}>
-      <h3 className={style.title}>TILEHAUS</h3>
+      <h3 className={style.title} onClick={() => location.reload()}>
+        TILEHAUS
+      </h3>
       <NavList
         items={navItems}
         listStyle={style.list}

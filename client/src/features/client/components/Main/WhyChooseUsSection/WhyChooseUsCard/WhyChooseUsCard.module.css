@@ -34,7 +34,7 @@
   .card {
     text-align: center;
     justify-content: center;
-    width: 100%;
+    width: 40rem;
     padding: 3rem 0 2rem 0;
   }
   .title,
@@ -46,7 +46,7 @@
 
 @media (max-width: 425px) {
   .card {
-    width: 90%;
+    width: 83%;
     padding: 2.4rem 3rem;
   }
   .card:not(:last-child) {

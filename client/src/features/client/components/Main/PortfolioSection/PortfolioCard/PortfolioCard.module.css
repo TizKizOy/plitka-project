@@ -1,6 +1,6 @@
 .card {
-  width: 100%;
-  min-height: 50%;
+  width: 95%;
+  height: 80%;
   background: #fff;
   transition: transform 0.3s ease;
   border-radius: 5rem;
@@ -26,6 +26,12 @@
   font-size: 2rem;
 }
 
+@media (max-width: 1200px) {
+  .card {
+    height: 46rem;
+  }
+}
+
 @media (max-width: 992px) {
   .textContainer {
     padding: 0 2rem 5rem 2rem;
@@ -38,12 +44,23 @@
 @media (max-width: 768px) {
   .card {
     width: 40rem;
+    height: 50rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .card {
+    height: 47rem;
   }
 }
 
 @media (max-width: 425px) {
+  .card {
+    height: 42rem;
+  }
   .image {
     height: 21rem;
+    margin-bottom: 2rem;
   }
   .textContainer {
     text-align: center;
