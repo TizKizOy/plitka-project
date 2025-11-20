@@ -1,11 +1,12 @@
 const bot = require("../index").bot;
 const dotenv = require('dotenv');
 dotenv.config();
+
 const chatId = process.env.CHATID;
 
 async function sendNotification(order) {
   let serviceName = "";
-  
+
   switch (order.fkIdService) {
     case "1":
       serviceName = "Укладка плитки";
@@ -27,6 +28,9 @@ async function sendNotification(order) {
       break;
     case "7":
       serviceName = "Комплексные работы";
+      break;
+    default:
+      serviceName = "Неизвестная услуга";
   }
 
   const message = `
@@ -38,6 +42,7 @@ async function sendNotification(order) {
       Номер телефона: ${order.phone}
       Местонахождение: ${order.location}
   `;
+
   try {
     await bot.sendMessage(chatId, message);
   } catch (error) {

@@ -1,6 +1,6 @@
 const orderService = require("../../services/orderService");
 const { sendNotification } = require("../../bot/services/notification");
-const { validation } = require("../../utils/validation");
+const { validateOrderData } = require("../../utils/validation");
 
 exports.getOrder = async (req, res, next) => {
   try {
