@@ -7,7 +7,7 @@ function formatOrderMessage(order, orderNumber = null) {
       })
     : "N/A";
   return `
-${orderNumber || ""} 📄<b>Заявка #${order.pkIdOrder || "N/A"}</b>
+${orderNumber || ""} 📄 <b>Заявка #${order.pkIdOrder || "N/A"}</b>
 👤 <b>Имя:</b> ${order.firstName || "N/A"}
 📞 <b>Телефон:</b> <a href="tel:${order.phone}">${order.phone || "N/A"}</a>
 📍 <b>Местонахождение:</b> ${order.location || "N/A"}

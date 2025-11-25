@@ -1,9 +1,6 @@
 const { formatOrderMessage } = require("../services/formatOrderMessage");
 const { validateOrderData } = require("../services/validation");
-const {
-  updateOrder,
-  getOrderById,
-} = require("../services/order");
+const { updateOrder, getOrderById } = require("../services/order");
 
 async function handleFieldEdit(
   bot,
@@ -35,7 +32,27 @@ async function handleFieldEdit(
   return new Promise((resolve) => {
     bot.once("message", async (msg) => {
       if (msg.chat.id !== chatId) return;
-      resolve(msg.text);
+
+      const inputValue = msg.text;
+      const validationData = { [fieldName]: inputValue };
+      const validationResult = validateOrderData(validationData);
+
+      if (!validationResult.isValid) {
+        const errorMessage = Object.values(validationResult.errors).join("\n");
+        await bot.sendMessage(chatId, `❌ ${errorMessage}`);
+
+        // Имитируем нажатие на кнопку "Отмена"
+        const callbackQuery = {
+          id: Date.now().toString(),
+          from: { id: chatId, is_bot: false, first_name: "" },
+          message: { chat: { id: chatId }, message_id: messageId },
+          data: `change_order_${orderId}_${orderNumber}`,
+        };
+        bot.emit("callback_query", callbackQuery);
+        return; // Завершаем выполнение без возврата значения
+      }
+
+      resolve(inputValue);
     });
   });
 }
@@ -58,40 +75,68 @@ async function updateAndShowOrder(
     const validationResult = validateOrderData(updateData);
     if (!validationResult.isValid) {
       const errorMessage = Object.values(validationResult.errors).join("\n");
-      await bot.sendMessage(chatId, errorMessage);
+      await bot.sendMessage(chatId, `❌ ${errorMessage}`);
+
+      // Имитируем нажатие на кнопку "Отмена"
+      const callbackQuery = {
+        id: Date.now().toString(),
+        from: { id: chatId, is_bot: false, first_name: "" },
+        message: { chat: { id: chatId }, message_id: messageId },
+        data: `change_order_${orderId}_${orderNumber}`,
+      };
+      bot.emit("callback_query", callbackQuery);
       return;
     }
 
     await updateOrder(orderId, updateData);
     const updatedOrder = await getOrderById(orderId);
-    const message = formatOrderMessage(updatedOrder, parseInt(orderNumber));
-    await bot.editMessageText(message, {
-      chat_id: chatId,
-      message_id: messageId,
-      parse_mode: "HTML",
-      reply_markup: {
-        inline_keyboard: [
-          [
-            {
-              text: `Редактировать #${updatedOrder.pkIdOrder}`,
-              callback_data: `change_order_${updatedOrder.pkIdOrder}_${orderNumber}`,
-            },
-            {
-              text: `Удалить #${updatedOrder.pkIdOrder}`,
-              callback_data: `delete_order_${updatedOrder.pkIdOrder}_${orderNumber}`,
-            },
-          ],
-        ],
-      },
-    });
-  } catch (error) {
-    console.error(`Ошибка при изменении ${Object.keys(updateData)}:`, error);
-    await bot.editMessageText(
-      `❌ Произошла ошибка при изменении ${Object.keys(updateData)}.`,
-      {
+    const message = formatOrderMessage(updatedOrder, parseInt(orderNumber) + 1);
+
+    try {
+      await bot.editMessageText(message, {
         chat_id: chatId,
         message_id: messageId,
-      }
+        parse_mode: "HTML",
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: `Редактировать #${updatedOrder.pkIdOrder}`,
+                callback_data: `change_order_${updatedOrder.pkIdOrder}_${orderNumber}`,
+              },
+              {
+                text: `Удалить #${updatedOrder.pkIdOrder}`,
+                callback_data: `delete_order_${updatedOrder.pkIdOrder}_${orderNumber}`,
+              },
+            ],
+          ],
+        },
+      });
+    } catch (error) {
+      console.error(`Ошибка при редактировании сообщения:`, error);
+      await bot.sendMessage(chatId, message, {
+        parse_mode: "HTML",
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: `Редактировать #${updatedOrder.pkIdOrder}`,
+                callback_data: `change_order_${updatedOrder.pkIdOrder}_${orderNumber}`,
+              },
+              {
+                text: `Удалить #${updatedOrder.pkIdOrder}`,
+                callback_data: `delete_order_${updatedOrder.pkIdOrder}_${orderNumber}`,
+              },
+            ],
+          ],
+        },
+      });
+    }
+  } catch (error) {
+    console.error(`Ошибка при изменении ${Object.keys(updateData)}:`, error);
+    await bot.sendMessage(
+      chatId,
+      `❌ Произошла ошибка при изменении ${Object.keys(updateData)}.`
     );
   }
 }

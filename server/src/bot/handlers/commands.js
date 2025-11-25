@@ -1,5 +1,4 @@
 const { sendAuthMenu, sendMainMenu } = require("./menu");
-const { isAuth } = require("../services/session");
 
 function setupCommands(bot) {
   bot.onText(/\/start/, async (msg) => {
