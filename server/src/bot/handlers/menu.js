@@ -1,3 +1,5 @@
+const { text } = require("express");
+
 async function sendAuthMenu(bot, chatId) {
   const options = {
     reply_markup: {
@@ -23,6 +25,10 @@ async function sendMainMenu(bot, chatId) {
         [
           { text: "📋 Все заявки", callback_data: "all_orders" },
           { text: "📄 Последняя заявка", callback_data: "last_order" },
+        ],
+        [
+          { text: "🚪 Выход", callback_data: "exit" },
+          { text: "❓ Помощь", callback_data: "help_after_auth" },
         ],
       ],
     },

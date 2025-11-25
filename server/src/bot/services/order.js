@@ -8,10 +8,19 @@ async function getAllOrders({ status, startDate, endDate, searchText } = {}) {
       endDate,
       searchText,
     });
-    return result.orders || [];
+    return result.orders.reverse() || [];
   } catch (error) {
     console.error("Ошибка при получении всех заказов:", error);
     return [];
+  }
+}
+
+async function getOrderById(pkIdOrder) {
+  try{
+    const result = await db.getOrderById(pkIdOrder);
+    return result
+  }catch (error){
+    console.error("Ошибка при получении заказа:", error);
   }
 }
 
@@ -21,11 +30,33 @@ async function getLastOrder() {
     if (!orders || !orders.orders || orders.orders.length === 0) {
       return null;
     }
-    return orders.orders[orders.orders.length - 1];
+    return orders.orders[0];
   } catch (error) {
     console.error("Ошибка при получении последнего заказа:", error);
     return null;
   }
 }
 
-module.exports = { getAllOrders, getLastOrder };
+async function updateOrder(orderId, newData) {
+  try{
+    await db.updateOrder(orderId, newData);
+  }catch (error){
+    console.error("Ошибка при редактировании заявки:", error);
+  }
+}
+
+async function deleteOrder(orderId) {
+  try {
+    await db.deleteOrder(orderId);
+  } catch (error) {
+    console.error("Ошибка при удалении заявки:", error);
+  }
+}
+
+module.exports = {
+  getAllOrders,
+  getLastOrder,
+  updateOrder,
+  deleteOrder,
+  getOrderById,
+};

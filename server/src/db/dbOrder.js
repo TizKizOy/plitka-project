@@ -21,7 +21,6 @@ exports.readOrder = async ({ status, startDate, endDate, searchText } = {}) => {
 };
 
 exports.addOrder = async (order) => {
-  console.log(order);
   try {
     const pool = await getPool();
     const request = pool.request();
@@ -35,6 +34,19 @@ exports.addOrder = async (order) => {
     return order;
   } catch (err) {
     console.error("Ошибка при добавлении заказа:", err);
+    throw err;
+  }
+};
+
+exports.getOrderById = async (pkIdOrder) => {
+  try {
+    const pool = await getPool();
+    const request = pool.request();
+    request.input("pkIdOrder", sql.NVarChar, pkIdOrder);
+    const result = await request.execute("pr_GetOrderById");
+    return result.recordset[0] || null;
+  } catch (err) {
+    console.error("Ошибка при чтении заказа:", err);
     throw err;
   }
 };

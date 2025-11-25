@@ -1,6 +1,7 @@
 const TelegramBot = require("node-telegram-bot-api");
 const dotenv = require("dotenv");
 dotenv.config();
+const { removeAuthSession, isWaitingForAuth } = require("./services/session");
 
 const token = process.env.TOKEN_BOT;
 const bot = new TelegramBot(token, { polling: true });
@@ -13,7 +14,11 @@ setupCommands(bot);
 setupCallbacks(bot);
 
 bot.on("message", async (msg) => {
-  await handleAuthMessage(bot, msg);
+  const chatId = msg.chat.id;
+  if (isWaitingForAuth(chatId)) {
+    await handleAuthMessage(bot, msg);
+    removeAuthSession(chatId);
+  }
 });
 
 module.exports = { bot };

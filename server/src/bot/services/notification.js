@@ -1,12 +1,8 @@
 const bot = require("../index").bot;
-const dotenv = require('dotenv');
-dotenv.config();
-
-const chatId = process.env.CHATID;
+const { getAuthorizedChatIds } = require("../services/session");
 
 async function sendNotification(order) {
   let serviceName = "";
-
   switch (order.fkIdService) {
     case "1":
       serviceName = "Укладка плитки";
@@ -33,20 +29,36 @@ async function sendNotification(order) {
       serviceName = "Неизвестная услуга";
   }
 
+  const chatIds = getAuthorizedChatIds();
+
+  if (chatIds.length === 0) {
+    console.log("Нет авторизованных пользователей для отправки уведомлений.");
+    return;
+  }
+
   const message = `
-    📝 Новая заявка!
-    Дата: ${new Date().toLocaleString()}
-    Данные:
-      Имя: ${order.firstName}
-      Услуга: ${serviceName}
-      Номер телефона: ${order.phone}
-      Местонахождение: ${order.location}
+📄 <b>Новая заявка:</b>
+📅 <b>Дата создания:</b>  ${new Date().toLocaleString()}
+📌 <b>Данные:</b>
+👤 <b>Имя:</b> ${order.firstName}
+🔧 <b>Услуга:</b> ${serviceName}
+📞 <b>Телефон:</b> <a href="tel:${order.phone}">${order.phone}</a>
+📍 <b>Местонахождение:</b> ${order.location}
   `;
 
   try {
-    await bot.sendMessage(chatId, message);
+    for (const chatId of chatIds) {
+      try {
+        await bot.sendMessage(chatId, message, { parse_mode: "HTML" });
+      } catch (error) {
+        console.error(
+          `Ошибка отправки уведомления пользователю ${chatId}:`,
+          error
+        );
+      }
+    }
   } catch (error) {
-    console.error("Ошибка отправки уведомления:", error);
+    console.error("Ошибка отправки уведомлений:", error);
   }
 }
 
