@@ -19,8 +19,9 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
     );
   };
 
-  const onSetStatusClosed = async () => {
+  const onSetStatusActive = async () => {
     try {
+      {console.log(selectedOrders)}
       await Promise.all(
         selectedOrders.map((orderId) =>
           axios.put(
@@ -33,7 +34,7 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
       setOrders((el) =>
         el.map((order) =>
           selectedOrders.includes(order.pkIdOrder)
-            ? { ...order, status: "Активно" }
+            ? { ...order, statusName: "Активно" }
             : order
         )
       );
@@ -44,7 +45,7 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
     }
   };
 
-  const onSetStatusActive = async () => {
+  const onSetStatusClosed = async () => {
     try {
       await Promise.all(
         selectedOrders.map((orderId) =>
@@ -58,7 +59,7 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
       setOrders((el) =>
         el.map((order) =>
           selectedOrders.includes(order.pkIdOrder)
-            ? { ...order, status: "Закрыто" }
+            ? { ...order, statusName: "Закрыто" }
             : order
         )
       );

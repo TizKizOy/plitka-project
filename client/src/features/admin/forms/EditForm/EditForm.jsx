@@ -101,9 +101,9 @@ const EditForm = ({
           <label className={style.editForm__statusOptionsLabel}>
             <input
               type="radio"
-              name="status"
+              name="statusName"
               value="Активно"
-              checked={formData.status === "Активно"}
+              checked={formData.statusName === "Активно"}
               onChange={handleChange}
             />
             Активно
@@ -111,9 +111,9 @@ const EditForm = ({
           <label>
             <input
               type="radio"
-              name="status"
+              name="statusName"
               value="Закрыто"
-              checked={formData.status === "Закрыто"}
+              checked={formData.statusName === "Закрыто"}
               onChange={handleChange}
             />
             Закрыто

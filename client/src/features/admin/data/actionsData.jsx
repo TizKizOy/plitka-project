@@ -10,12 +10,12 @@ export const actions = (
   {
     icon: <CiUnlock size={22} />,
     name: "Сделать активной",
-    onClick: onSetStatusClosed,
+    onClick: onSetStatusActive,
   },
   {
     icon: <CiLock size={22} />,
     name: "Закрыть заявку",
-    onClick: onSetStatusActive,
+    onClick: onSetStatusClosed,
   },
   {
     icon: <CiTrash size={22} />,

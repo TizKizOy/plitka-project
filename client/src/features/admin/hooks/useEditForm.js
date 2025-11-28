@@ -19,7 +19,7 @@ export const useEditForm = ({
         serviceName: "",
         location: "",
         comment: "",
-        status: "Активно",
+        statusName: "",
       };
     }
     const initialServiceLabel = services.find(
@@ -41,7 +41,7 @@ export const useEditForm = ({
       : "",
     location: order?.location || "",
     comment: order?.comment || "",
-    status: order?.status || "Активно",
+    statusName: order?.statusName || "",
   };
 
   const [changedFields, setChangedFields] = useState({});
@@ -69,7 +69,7 @@ export const useEditForm = ({
         location: formData.location,
         comment: formData.comment,
         fkIdService: fkIdService,
-        fkIdStatus: formData.status === "Активно" ? "1" : "2",
+        fkIdStatus: formData.statusName === "Активно" ? "1" : "2",
       };
       const response = await axios.put(
         `${API_URL}/v1/order/${order.pkIdOrder}`,
@@ -82,7 +82,7 @@ export const useEditForm = ({
         )
       );
       highlightRows([order.pkIdOrder]);
-      await fetchOrders();
+      // await fetchOrders();
       onClose();
       setChangedFields({});
     } catch (error) {

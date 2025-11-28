@@ -21,10 +21,10 @@ const SelectedOrdersToolbar = ({
         </span>
       </div>
       <div className={style.buttons}>
-        <button className={style.button} onClick={onSetStatusClosed}>
+        <button className={style.button} onClick={onSetStatusActive}>
           <CiUnlock />
         </button>
-        <button className={style.button} onClick={onSetStatusActive}>
+        <button className={style.button} onClick={onSetStatusClosed}>
           <CiLock />
         </button>
         <button className={style.button} onClick={onDeleteOrder}>

@@ -20,7 +20,7 @@ const OrdersSection = ({
         </div>
         <div>Имя</div>
         <div>Услуга</div>
-        <div>Локация, км</div>
+        <div>Локация</div>
         <div>Телефон</div>
         <div>Статус</div>
         <div>Комментарий админа</div>
@@ -70,7 +70,7 @@ const OrdersSection = ({
             </div>
             <div className={style.table__status}>
               <span>Статус</span>
-              <p>{order.status || "активно"}</p>
+              <p>{order.statusName || "активно"}</p>
             </div>
             <div className={style.table__comment}>
               <span>Комментарий админа</span>

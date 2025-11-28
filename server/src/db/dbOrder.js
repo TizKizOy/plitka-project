@@ -1,19 +1,12 @@
-const { getPool, sql } = require("./dbConfig");
+const pool = require("./dbConfig");
 
 exports.readOrder = async ({ status, startDate, endDate, searchText } = {}) => {
   try {
-    const pool = await getPool();
-    const request = pool.request();
-
-    if (status !== undefined) request.input("status", sql.NVarChar, status);
-    if (startDate !== undefined)
-      request.input("startDate", sql.Date, startDate);
-    if (endDate !== undefined) request.input("endDate", sql.Date, endDate);
-    if (searchText !== undefined)
-      request.input("searchText", sql.NVarChar, searchText);
-
-    const result = await request.execute("pr_FilterOrders");
-    return { orders: result.recordset };
+    const { rows } = await pool.query(
+      `SELECT * FROM pr_FilterOrders($1, $2, $3, $4);`,
+      [status || null, startDate || null, endDate || null, searchText || null]
+    );
+    return rows;
   } catch (err) {
     console.error("Ошибка при чтении заказов:", err);
     throw err;
@@ -22,16 +15,21 @@ exports.readOrder = async ({ status, startDate, endDate, searchText } = {}) => {
 
 exports.addOrder = async (order) => {
   try {
-    const pool = await getPool();
-    const request = pool.request();
-    request
-      .input("pkIdOrder", sql.NVarChar, order.pkIdOrder)
-      .input("firstName", sql.NVarChar, order.firstName)
-      .input("phone", sql.NVarChar, order.phone)
-      .input("location", sql.NVarChar, order.location)
-      .input("fkIdService", sql.Int, order.fkIdService);
-    await request.execute(`pr_InsertOrder`);
-    return order;
+    await pool.query(
+      `SELECT pr_InsertOrder($1, $2, $3, $4, $5, $6);`,
+      [
+        order.pkIdOrder,
+        order.firstName,
+        order.phone,
+        order.location,
+        order.fkIdService || 7,
+        order.fkIdStatus || 1,
+      ]
+    );
+    const { rows } = await pool.query(`SELECT * FROM pr_GetOrderById($1);`, [
+      order.pkIdOrder,
+    ]);
+    return rows[0];
   } catch (err) {
     console.error("Ошибка при добавлении заказа:", err);
     throw err;
@@ -40,11 +38,10 @@ exports.addOrder = async (order) => {
 
 exports.getOrderById = async (pkIdOrder) => {
   try {
-    const pool = await getPool();
-    const request = pool.request();
-    request.input("pkIdOrder", sql.NVarChar, pkIdOrder);
-    const result = await request.execute("pr_GetOrderById");
-    return result.recordset[0] || null;
+    const { rows } = await pool.query(`SELECT * FROM pr_GetOrderById($1);`, [
+      pkIdOrder,
+    ]);
+    return rows[0] || null;
   } catch (err) {
     console.error("Ошибка при чтении заказа:", err);
     throw err;
@@ -53,40 +50,19 @@ exports.getOrderById = async (pkIdOrder) => {
 
 exports.updateOrder = async (pkIdOrder, newData) => {
   try {
-    const pool = await getPool();
-    const request = pool.request();
-    request.input("pkIdOrder", sql.NVarChar, pkIdOrder);
-    
-    if (newData.firstName !== undefined) {
-      request.input("newFirstName", sql.NVarChar, newData.firstName);
-    }
-    if (newData.phone !== undefined) {
-      request.input("newPhone", sql.NVarChar, newData.phone);
-    }
-    if (newData.location !== undefined) {
-      request.input("newLocation", sql.NVarChar, newData.location);
-    }
-    if (newData.comment !== undefined) {
-      request.input("newComment", sql.NVarChar, newData.comment);
-    }
-    if (newData.fkIdService !== undefined) {
-      request.input("newFkIdService", sql.Int, newData.fkIdService);
-    }
-    if (newData.fkIdStatus !== undefined) {
-      request.input("newFkIdStatus", sql.Int, newData.fkIdStatus);
-    }
-
-    await request.execute("pr_UpdateOrder");
-    const result = await pool
-      .request()
-      .input("pkIdOrder", sql.NVarChar, pkIdOrder)
-      .execute("pr_GetOrderById");
-
-    if (!result.recordset[0]) {
-      throw new Error("Заявка не найдена");
-    }
-
-    return result.recordset[0];
+    await pool.query(`SELECT pr_UpdateOrder($1, $2, $3, $4, $5, $6, $7);`, [
+      pkIdOrder,
+      newData.firstName || null,
+      newData.phone || null,
+      newData.location || null,
+      newData.comment || null,
+      newData.fkIdService || null,
+      newData.fkIdStatus || null,
+    ]);
+    const { rows } = await pool.query(`SELECT * FROM pr_GetOrderById($1);`, [
+      pkIdOrder,
+    ]);
+    return rows[0];
   } catch (err) {
     console.error("Ошибка при обновлении заказа:", err);
     throw err;
@@ -95,12 +71,10 @@ exports.updateOrder = async (pkIdOrder, newData) => {
 
 exports.deleteOrder = async (pkIdOrder) => {
   try {
-    const pool = await getPool();
-    const request = pool.request();
-    request.input("pkIdOrder", sql.NVarChar, pkIdOrder);
-    await request.execute("pr_DeleteOrder");
+    await pool.query(`SELECT pr_DeleteOrder($1);`, [pkIdOrder]);
   } catch (err) {
     console.error("Ошибка при удалении заказа:", err);
     throw err;
   }
 };
+

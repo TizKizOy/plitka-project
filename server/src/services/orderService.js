@@ -1,26 +1,19 @@
 const db = require("../db/dbOrder");
 const { v4: uuidv4 } = require("uuid");
 
-function validateOrderData(data) {
-  if (!data.firstName || !data.phone || !data.fkIdService) {
-    throw new Error("Недостаточно данных для создания заявки");
-  }
-}
-
 exports.getAllOrders = async({ status, startDate, endDate, searchText }) => {
   const result = await db.readOrder({ status, startDate, endDate, searchText });
-  return result.orders;
+  return result;
 }
 
 exports.getOrderById = async(pkIdOrder) => {
   const result = await db.readOrder();
-  return result.orders.find((order) => order.pkIdOrder === pkIdOrder);
+  return result.find((order) => order.pkIdOrder === pkIdOrder);
 }
 
 exports.createOrder = async(data) => {
-  validateOrderData(data);
   const orderContent = await db.readOrder();
-  const samePhoneOrders = orderContent.orders.filter(
+  const samePhoneOrders = orderContent.filter(
     (order) => order.phone === data.phone
   );
   if (samePhoneOrders.length > 3) {
@@ -47,7 +40,7 @@ exports.updateOrder = async(pkIdOrder, newData) => {
 
 exports.deleteOrder = async(pkIdOrder) => {
   const orderContent = await db.readOrder();
-  const orderIndex = orderContent.orders.findIndex(
+  const orderIndex = orderContent.findIndex(
     (order) => order.pkIdOrder === pkIdOrder
   );
   if (orderIndex === -1) {

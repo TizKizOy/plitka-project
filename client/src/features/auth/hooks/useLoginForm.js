@@ -30,7 +30,7 @@ export const useLoginForm = () => {
     }
 
     try {
-      await axios.post(`${API_URL}/admin/login`, data, {
+      await axios.post(`${API_URL}/admin/login`, JSON.stringify(data), {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
