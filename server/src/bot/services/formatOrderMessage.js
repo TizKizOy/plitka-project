@@ -13,7 +13,7 @@ ${orderNumber || ""} 📄 <b>Заявка #${order.pkIdOrder || "N/A"}</b>
 📍 <b>Местонахождение:</b> ${order.location || "N/A"}
 📅 <b>Дата создания:</b> ${formattedDate}
 🔧 <b>Услуга:</b> ${order.serviceName || "N/A"}
-📌 <b>Статус:</b> ${order.status || "N/A"}
+📌 <b>Статус:</b> ${order.statusName || "N/A"}
 💬 <b>Комментарий:</b> ${order.comment || "Нет комментариев"}
   `;
 }

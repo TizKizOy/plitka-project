@@ -8,7 +8,7 @@ async function getAllOrders({ status, startDate, endDate, searchText } = {}) {
       endDate,
       searchText,
     });
-    return result.orders.reverse() || [];
+    return result.reverse() || [];
   } catch (error) {
     console.error("Ошибка при получении всех заказов:", error);
     return [];
@@ -27,10 +27,10 @@ async function getOrderById(pkIdOrder) {
 async function getLastOrder() {
   try {
     const orders = await db.readOrder();
-    if (!orders || !orders.orders || orders.orders.length === 0) {
+    if (!orders || orders.length === 0) {
       return null;
     }
-    return orders.orders[0];
+    return orders[0];
   } catch (error) {
     console.error("Ошибка при получении последнего заказа:", error);
     return null;

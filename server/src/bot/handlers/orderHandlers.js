@@ -41,7 +41,6 @@ async function handleFieldEdit(
         const errorMessage = Object.values(validationResult.errors).join("\n");
         await bot.sendMessage(chatId, `❌ ${errorMessage}`);
 
-        // Имитируем нажатие на кнопку "Отмена"
         const callbackQuery = {
           id: Date.now().toString(),
           from: { id: chatId, is_bot: false, first_name: "" },
@@ -49,7 +48,7 @@ async function handleFieldEdit(
           data: `change_order_${orderId}_${orderNumber}`,
         };
         bot.emit("callback_query", callbackQuery);
-        return; // Завершаем выполнение без возврата значения
+        return; 
       }
 
       resolve(inputValue);
@@ -77,7 +76,6 @@ async function updateAndShowOrder(
       const errorMessage = Object.values(validationResult.errors).join("\n");
       await bot.sendMessage(chatId, `❌ ${errorMessage}`);
 
-      // Имитируем нажатие на кнопку "Отмена"
       const callbackQuery = {
         id: Date.now().toString(),
         from: { id: chatId, is_bot: false, first_name: "" },

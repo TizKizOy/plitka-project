@@ -67,8 +67,6 @@ function setupCallbacks(bot) {
 
 3️⃣ <b>Выход</b>
 Нажмите кнопку "Выход", чтобы завершить сессию и выйти из аккаунта.
-
-Если у вас возникнут вопросы, обратитесь к администратору. 😊
     `;
         await bot.sendMessage(chatId, helpMessage, { parse_mode: "HTML" });
       }
