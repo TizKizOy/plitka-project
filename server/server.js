@@ -12,7 +12,11 @@ const app = createApp();
 
 app.use(
   cors({
-    origin: process.env.URL_OF_CORS_1,
+    origin: [
+      process.env.URL_OF_CORS_1,
+      process.env.URL_OF_CORS_2,
+      process.env.URL_OF_CORS_3,
+    ],
     credentials: true,
   })
 );
@@ -35,12 +39,12 @@ app.use(logger);
 app.get("/", (req, res) => {
   res.json({
     message:
-      "Добро пожаловать в API заказов! Используйте /v1/order для работы с заявками. ",
+      "Добро пожаловать в API заказов! Используйте '/plitka-project/api/v1/order' для работы с заявками. ",
   });
 });
 
-app.use("/v1", orderRoutes);
-app.use("/admin", adminRoutes);
+app.use("/plitka-project/api/v1", orderRoutes);
+app.use("/plitka-project/api/admin", adminRoutes);
 
 const port = process.env.PORT;
 const server = app.listen(port, () => {
