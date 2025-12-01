@@ -39,12 +39,12 @@ app.use(logger);
 app.get("/", (req, res) => {
   res.json({
     message:
-      "Добро пожаловать в API заказов! Используйте '/plitka-project/api/v1/order' для работы с заявками. ",
+      "Добро пожаловать в API заказов! Используйте '/api/v1/order' для работы с заявками. ",
   });
 });
 
-app.use("/plitka-project/api/v1", orderRoutes);
-app.use("/plitka-project/api/admin", adminRoutes);
+app.use("/api/v1", orderRoutes);
+app.use("/api/admin", adminRoutes);
 
 const port = process.env.PORT;
 const server = app.listen(port, () => {

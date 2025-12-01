@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://TizKizOy.github.io/plitka-project",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
