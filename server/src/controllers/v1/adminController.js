@@ -12,7 +12,9 @@ exports.login = async (req, res) => {
       login: admin.login,
       role: admin.login
     };
-    res.json({ message: 'Авторизация успешна!' });
+    req.session.save(() => {
+      res.json({ message: "Авторизация успешна!" });
+    });
   } catch (err) {
     res.status(401).json({ error: err.message });
   }
