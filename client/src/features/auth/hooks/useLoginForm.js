@@ -30,10 +30,15 @@ export const useLoginForm = () => {
     }
 
     try {
-      await axios.post(`${API_URL}/admin/login`, JSON.stringify(data), {
+      const res = await axios.post(`${API_URL}/admin/login`, JSON.stringify(data), {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
+
+      const tmp = res.data;
+      if (tmp.token) {
+        localStorage.setItem("token", tmp.token);
+      }
       navigate("/admin");
     } catch (error) {
       console.error("Ошибка:", error.response?.data?.error || error.message);

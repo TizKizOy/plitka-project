@@ -1,4 +1,3 @@
-const session = require("express-session");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
@@ -18,22 +17,6 @@ app.use(
       process.env.URL_OF_CORS_3,
     ],
     credentials: true,
-  })
-);
-
-const isProduction = process.env.NODE_ENV === "production";
-
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: isProduction,
-      httpOnly: true,
-      sameSite: isProduction ? "none" : "lax",
-      maxAge: 1000 * 60 * 60 * 24,
-    },
   })
 );
 

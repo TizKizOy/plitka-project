@@ -15,8 +15,9 @@ export const useLogout = () => {
         {},
         { withCredentials: true }
       );
-      document.cookie =
-        "connect.sid=; Max-Age=0; Path=/; Secure; SameSite=Strict";
+      // document.cookie =
+      //   "connect.sid=; Max-Age=0; Path=/; Secure; SameSite=Strict";
+      localStorage.removeItem("token");
       navigate("/admin/login");
     } catch (error) {
       setError("Не удалось выйти. Попробуйте позже.");

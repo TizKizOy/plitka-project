@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_URL } from "../../../shared/utils/apiConfig";
+import { useToken } from "../../../shared/hooks/useToken";
 
 export const useOrdersFilters = (setOrders) => {
   const [filters, setFilters] = useState({
@@ -8,6 +9,7 @@ export const useOrdersFilters = (setOrders) => {
     dateRange: "Все",
     searchText: "",
   });
+  const token = useToken();
 
   const fetchOrders = async () => {
     try {
@@ -59,6 +61,9 @@ export const useOrdersFilters = (setOrders) => {
       const response = await axios.get(`${API_URL}/order`, {
         params,
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       setOrders(response.data);

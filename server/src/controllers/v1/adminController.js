@@ -6,19 +6,18 @@ exports.login = async (req, res) => {
     if (!login || !password) {
       return res.status(400).json({ error: "Логин и пароль обязательны!" });
     }
-    const admin = await adminService.authenticateAdmin(login, password);
-    req.session.admin = {
-      id: admin.pkIdAdmin,
-      login: admin.login,
-      role: admin.login
-    };
-    res.json({ message: 'Авторизация успешна!' });
+    const { admin, token } = await adminService.login(login, password);
+
+    res.status(200).json({ message: "Авторизация успешна!", token });
   } catch (err) {
     res.status(401).json({ error: err.message });
   }
 };
 
 exports.logout = (req, res) => {
-  req.session.destroy();
   res.json({ message: 'Выход выполнен!' });
+};
+
+exports.protected = (req, res) => {
+  res.json({ message: "Доступ разрешён!", admin: true });
 };
