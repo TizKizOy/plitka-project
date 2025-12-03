@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import services from "../../../shared/data/servicesForm.json";
 import { API_URL } from "../../../shared/utils/apiConfig";
+import { useToken } from "../../../shared/hooks/useToken";
 
 export const useEditForm = ({
   order,
@@ -45,6 +46,7 @@ export const useEditForm = ({
   };
 
   const [changedFields, setChangedFields] = useState({});
+  const token = useToken();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -72,9 +74,14 @@ export const useEditForm = ({
         fkIdStatus: formData.statusName === "Активно" ? "1" : "2",
       };
       const response = await axios.put(
-        `${API_URL}/v1/order/${order.pkIdOrder}`,
+        `${API_URL}/order/${order.pkIdOrder}`,
         reqData,
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
       );
       setOrders((prev) =>
         prev.map((o) =>

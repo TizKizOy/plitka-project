@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_URL } from "../../../shared/utils/apiConfig";
+import { useToken } from "../../../shared/hooks/useToken";
 
 export const useOrdersSelection = (setOrders, highlightRows) => {
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [isSelectedOrderVisible, setIsSelectedOrderVisible] = useState(false);
+  const token = useToken();
 
   useEffect(() => {
     setIsSelectedOrderVisible(selectedOrders.length > 0);
@@ -25,9 +27,14 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
       await Promise.all(
         selectedOrders.map((orderId) =>
           axios.put(
-            `${API_URL}/v1/order/${orderId}`,
+            `${API_URL}/order/${orderId}`,
             { fkIdStatus: 1 },
-            { withCredentials: true }
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              withCredentials: true,
+            }
           )
         )
       );
@@ -50,9 +57,14 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
       await Promise.all(
         selectedOrders.map((orderId) =>
           axios.put(
-            `${API_URL}/v1/order/${orderId}`,
+            `${API_URL}/order/${orderId}`,
             { fkIdStatus: 2 },
-            { withCredentials: true }
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              withCredentials: true,
+            }
           )
         )
       );
@@ -76,7 +88,10 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
       try {
         await Promise.all(
           selectedOrders.map((orderId) =>
-            axios.delete(`${API_URL}/v1/order/${orderId}`, {
+            axios.delete(`${API_URL}/order/${orderId}`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
               withCredentials: true,
             })
           )

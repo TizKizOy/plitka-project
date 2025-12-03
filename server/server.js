@@ -1,4 +1,3 @@
-const session = require("express-session");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
@@ -21,21 +20,6 @@ app.use(
   })
 );
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: true,
-      httpOnly: true,
-      sameSite: "None",
-      maxAge: 1000 * 60 * 60 * 24,
-      domain: ".onrender.com",
-    },
-  })
-);
-
 app.use(logger);
 app.get("/", (req, res) => {
   res.json({
@@ -45,7 +29,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/v1", orderRoutes);
-app.use("/admin", adminRoutes);
+app.use("/v1/admin", adminRoutes);
 
 const port = process.env.PORT;
 const server = app.listen(port, () => {

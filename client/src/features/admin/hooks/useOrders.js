@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_URL } from "../../../shared/utils/apiConfig";
+import { useToken } from "../../../shared/hooks/useToken";
 
 export const useOrders = () => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const token = useToken();
 
   const getOrders = async () => {
     try {
-      const response = await axios.get(`${API_URL}/v1/order`, {
+      const response = await axios.get(`${API_URL}/order`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         withCredentials: true,
       });
       setOrders(response.data);

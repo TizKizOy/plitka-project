@@ -5,8 +5,7 @@ const isAuthenticated = require('../../middlewares/isAuthenticated').isAuthentic
 
 router.post('/login', adminController.login);
 router.post('/logout', adminController.logout);
-router.get('/protected', isAuthenticated, (req, res) => {
-  res.json({ message: 'Доступ разрешён!', admin: req.session.admin });
-});
+router.get("/protected", isAuthenticated, adminController.protected);
+
 
 module.exports = router;
