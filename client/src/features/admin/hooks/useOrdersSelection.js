@@ -25,7 +25,7 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
       await Promise.all(
         selectedOrders.map((orderId) =>
           axios.put(
-            `${API_URL}/v1/order/${orderId}`,
+            `${API_URL}/order/${orderId}`,
             { fkIdStatus: 1 },
             { withCredentials: true }
           )
@@ -50,7 +50,7 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
       await Promise.all(
         selectedOrders.map((orderId) =>
           axios.put(
-            `${API_URL}/v1/order/${orderId}`,
+            `${API_URL}/order/${orderId}`,
             { fkIdStatus: 2 },
             { withCredentials: true }
           )
@@ -76,7 +76,7 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
       try {
         await Promise.all(
           selectedOrders.map((orderId) =>
-            axios.delete(`${API_URL}/v1/order/${orderId}`, {
+            axios.delete(`${API_URL}/order/${orderId}`, {
               withCredentials: true,
             })
           )

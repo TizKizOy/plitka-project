@@ -56,7 +56,7 @@ export const useOrdersFilters = (setOrders) => {
 
       if (filters.searchText) params.searchText = filters.searchText;
 
-      const response = await axios.get(`${API_URL}/v1/order`, {
+      const response = await axios.get(`${API_URL}/order`, {
         params,
         withCredentials: true,
       });

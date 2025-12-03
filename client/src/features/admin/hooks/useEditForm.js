@@ -72,7 +72,7 @@ export const useEditForm = ({
         fkIdStatus: formData.statusName === "Активно" ? "1" : "2",
       };
       const response = await axios.put(
-        `${API_URL}/v1/order/${order.pkIdOrder}`,
+        `${API_URL}/order/${order.pkIdOrder}`,
         reqData,
         { withCredentials: true }
       );

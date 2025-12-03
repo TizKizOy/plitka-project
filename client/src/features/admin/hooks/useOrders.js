@@ -9,7 +9,7 @@ export const useOrders = () => {
 
   const getOrders = async () => {
     try {
-      const response = await axios.get(`${API_URL}/v1/order`, {
+      const response = await axios.get(`${API_URL}/order`, {
         withCredentials: true,
       });
       setOrders(response.data);

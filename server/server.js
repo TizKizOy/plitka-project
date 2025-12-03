@@ -21,15 +21,17 @@ app.use(
   })
 );
 
+const isProduction = process.env.NODE_ENV === "production";
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: true,
+      secure: isProduction,
       httpOnly: true,
-      sameSite: "none",
+      sameSite: isProduction ? "none" : "lax",
       maxAge: 1000 * 60 * 60 * 24,
     },
   })
@@ -44,7 +46,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/plitka-project/api/v1", orderRoutes);
-app.use("/plitka-project/api/admin", adminRoutes);
+app.use("/plitka-project/api/v1/admin", adminRoutes);
 
 const port = process.env.PORT;
 const server = app.listen(port, () => {
