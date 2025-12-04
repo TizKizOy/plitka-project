@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API_URL } from "../../../shared/utils/apiConfig";
 import { validateForm } from "../utils/validation";
+import api from "../../../shared/hooks/useAxios";
 
 export const useLoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,15 +29,13 @@ export const useLoginForm = () => {
     }
 
     try {
-      const res = await axios.post(`${API_URL}/admin/login`, JSON.stringify(data), {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-
+      const res = await api.post("/admin/login", data);
       const tmp = res.data;
-      if (tmp.token) {
-        localStorage.setItem("token", tmp.token);
+
+      if (tmp.accessToken) {
+        localStorage.setItem("accessToken", tmp.accessToken);
       }
+      
       navigate("/admin");
     } catch (error) {
       console.error("Ошибка:", error.response?.data?.error || error.message);

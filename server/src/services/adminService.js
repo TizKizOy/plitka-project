@@ -1,8 +1,6 @@
-const dbAdmin = require("../db/dbAdmin");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-dotenv.config();
+const dbAdmin = require("../db/dbAdmin");
+const jwtService = require("./jwtService");
 
 exports.login = async (login, password) => {
   const admin = await dbAdmin.getAdminByLogin(login);
@@ -14,11 +12,11 @@ exports.login = async (login, password) => {
   const payload = {
     userId: admin.pkIdAdmin,
     login: admin.login,
+    role: admin.login,
   };
 
-  const token = jwt.sign(payload, process.env.SECRET_KEY, {
-    expiresIn: "1d",
-  });
+  const accessToken = jwtService.signAccessToken(payload);
+  const refreshToken = jwtService.signRefreshToken(payload);
 
-  return { admin, token };
+  return { admin, accessToken, refreshToken };
 };

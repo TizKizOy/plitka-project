@@ -1,8 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import services from "../../../shared/data/servicesForm.json";
-import { API_URL } from "../../../shared/utils/apiConfig";
 import { useToken } from "../../../shared/hooks/useToken";
+import api from "../../../shared/hooks/useAxios";
 
 export const useEditForm = ({
   order,
@@ -73,23 +72,17 @@ export const useEditForm = ({
         fkIdService: fkIdService,
         fkIdStatus: formData.statusName === "Активно" ? "1" : "2",
       };
-      const response = await axios.put(
-        `${API_URL}/order/${order.pkIdOrder}`,
-        reqData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        }
-      );
+      await api.put(`/order/${order.pkIdOrder}`, reqData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setOrders((prev) =>
         prev.map((o) =>
           o.pkIdOrder === order.pkIdOrder ? { ...o, ...formData } : o
         )
       );
       highlightRows([order.pkIdOrder]);
-      // await fetchOrders();
       onClose();
       setChangedFields({});
     } catch (error) {

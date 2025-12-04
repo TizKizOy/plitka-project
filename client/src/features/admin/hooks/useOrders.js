@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { API_URL } from "../../../shared/utils/apiConfig";
 import { useToken } from "../../../shared/hooks/useToken";
+import api from "../../../shared/hooks/useAxios";
 
 export const useOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -11,11 +10,10 @@ export const useOrders = () => {
 
   const getOrders = async () => {
     try {
-      const response = await axios.get(`${API_URL}/order`, {
+      const response = await api.get(`/order`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        withCredentials: true,
       });
       setOrders(response.data);
     } catch (error) {
@@ -32,3 +30,5 @@ export const useOrders = () => {
 
   return { orders, setOrders, isLoading, error };
 };
+
+

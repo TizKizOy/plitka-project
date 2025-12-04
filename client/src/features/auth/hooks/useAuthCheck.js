@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { API_URL } from "../../../shared/utils/apiConfig";
-import { useToken } from "../../../shared/hooks/useToken"; 
+import { useToken } from "../../../shared/hooks/useToken";
+import api from '../../../shared/hooks/useAxios'
 
 export const useAuthCheck = () => {
   const [isAuth, setIsAuth] = useState(null);
@@ -15,12 +14,7 @@ export const useAuthCheck = () => {
       }
 
       try {
-        const response = await axios.get(`${API_URL}/admin/protected`, {
-          headers: {
-            Authorization: `Bearer ${token}`, 
-          },
-          withCredentials: true,
-        });
+        const response = await api.get("/admin/protected");
         setIsAuth(!!response.data.admin);
       } catch (error) {
         setIsAuth(false);
