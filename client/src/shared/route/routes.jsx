@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import { ClientPage } from "../../features/client/pages/ClientPage/ClientPage";
 import { AdminLogin } from "../../features/auth/pages/AdminLogin/AdminLogin";
 import { AdminPanel } from "../../features/admin/pages/AdminPanel/AdminPanel";
@@ -12,6 +13,10 @@ export const routes = [
   {
     path: "/admin/login",
     element: <AdminLogin />,
+  },
+  {
+    path: "/admin/refresh",
+    element: <Navigate to="/admin" replace />,
   },
   {
     path: "/admin/*",

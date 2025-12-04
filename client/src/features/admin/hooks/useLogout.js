@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API_URL } from "../../../shared/utils/apiConfig";
+import api from "../../../shared/hooks/useAxios";
 
 export const useLogout = () => {
   const [error, setError] = useState(null);
@@ -10,13 +9,7 @@ export const useLogout = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(
-        `${API_URL}/admin/logout`,
-        {},
-        { withCredentials: true }
-      );
-      // document.cookie =
-      //   "connect.sid=; Max-Age=0; Path=/; Secure; SameSite=Strict";
+      await api.post(`/admin/logout`);
       localStorage.removeItem("token");
       navigate("/admin/login");
     } catch (error) {

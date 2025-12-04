@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { API_URL } from "../../../shared/utils/apiConfig";
 import { useToken } from "../../../shared/hooks/useToken";
+import api from "../../../shared/hooks/useAxios";
 
 export const useOrdersSelection = (setOrders, highlightRows) => {
   const [selectedOrders, setSelectedOrders] = useState([]);
@@ -23,19 +22,11 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
 
   const onSetStatusActive = async () => {
     try {
-      {console.log(selectedOrders)}
       await Promise.all(
         selectedOrders.map((orderId) =>
-          axios.put(
-            `${API_URL}/order/${orderId}`,
-            { fkIdStatus: 1 },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-              withCredentials: true,
-            }
-          )
+          api.put(`/order/${orderId}`, { fkIdStatus: 1 }, {
+            headers: { Authorization: `Bearer ${token}` }
+          })
         )
       );
       setOrders((el) =>
@@ -56,16 +47,10 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
     try {
       await Promise.all(
         selectedOrders.map((orderId) =>
-          axios.put(
-            `${API_URL}/order/${orderId}`,
-            { fkIdStatus: 2 },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-              withCredentials: true,
-            }
-          )
+          api.put(
+            `/order/${orderId}`, { fkIdStatus: 2 }, {
+              headers: { Authorization: `Bearer ${token}` },
+            })
         )
       );
       setOrders((el) =>
@@ -88,11 +73,8 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
       try {
         await Promise.all(
           selectedOrders.map((orderId) =>
-            axios.delete(`${API_URL}/order/${orderId}`, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-              withCredentials: true,
+            api.delete(`/order/${orderId}`, {
+              headers: { Authorization: `Bearer ${token}` },
             })
           )
         );
