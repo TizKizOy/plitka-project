@@ -1,7 +1,6 @@
 import style from "./PortfolioCard.module.css";
 
 const PortfolioCard = ({ imageSmall, imageLarge, title, text }) => {
-  console.log(imageSmall, imageLarge);
   return (
     <div className={style.card}>
       <img
