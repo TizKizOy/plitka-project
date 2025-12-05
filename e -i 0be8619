@@ -1,0 +1,69 @@
+[33m1ab528e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature[m[33m)[m add: viteCompression in viteConfig
+[33m0167164[m Merge branch 'feature' of https://github.com/TizKizOy/plitka-project into feature
+[33m0be8619[m fix: use access and refresh token
+[33me7374c7[m Merge branch 'render-deploy' into feature
+[33m0383395[m fix: use jwt instead of session
+[33m65a1271[m fix: api url
+[33me039002[m update Readme
+[33m415cb9b[m update
+[33m54b63b5[m update
+[33m7f56b36[m update
+[33mb7d6954[m update
+[33mb1d10a0[m update
+[33me26b6b0[m update
+[33m83fb744[m update
+[33mccf6274[m update
+[33m458749d[m update
+[33md12c14a[m add: ./dist
+[33mf76a199[m update
+[33m2d5155a[m fix: cookie config
+[33mbea5b2e[m fix: new api url
+[33md4c0ce8[m fix: delete unused dependencies
+[33m244cb62[m fix: add meta data
+[33me354ce1[m fix: add meta data
+[33m4d90c25[m add: new api url and cors data
+[33m17b7068[m add: transferring db to pgSql
+[33m901b9d8[m add: transferring db to pgSql
+[33maa6f25a[m add: validation mess clients
+[33m933278b[m add: crud for tg bot
+[33mf227a12[m add: session for tg bot
+[33m710b18e[m feat: fix bags mobile version app
+[33m218e6fa[m add: validation post req on server
+[33m5f6c31b[m feat: fix bags mobile version app
+[33m6792766[m feat: fix bags mobile version app
+[33m62907c9[m add: parallax banner for back img
+[33ma6dac49[m add: parallax banner for back img
+[33m3f480b1[m add: swiper and actionButton
+[33m5a50cf4[m Merge branch 'feature' of https://github.com/TizKizOy/plitka-project into feature
+[33m06bbf6c[m add: animation when scrolling
+[33m59c6b7c[m Merge branch 'main' into feature
+[33m22ddd41[m add: add highlighting lines for delete
+[33m97fd576[m add: add highlighting lines
+[33mc352f42[m refactor: extract logic into custom hooks
+[33m2f901bf[m feat: optimized photos
+[33m51a36aa[m feat: add mobile version in admin
+[33mb5551d9[m feat: add new lovation image/icon
+[33mbe7c34e[m feat: beta test router
+[33m611b24a[m feat: edit configApi
+[33mf3dfb49[m fd
+[33m14e545b[m[33m ([m[1;32mmain[m[33m)[m Delete Задача.txt
+[33m8604aae[m Delete Схемы directory
+[33mbf96489[m feat: add new styles in index.css
+[33m7097083[m Update README.md
+[33m2a53d09[m Create README.md
+[33m128c499[m feat: add zero_styles
+[33m06a8533[m f
+[33maaf35ec[m a
+[33m25a497a[m as
+[33m7c23ac7[m current pr
+[33m3e59cc8[m gf
+[33me839aa8[m f
+[33mce184e5[m Merge pull request #2 from TizKizOy/feature
+[33m221c51a[m feat: add mobile version
+[33mb5c5d12[m Merge pull request #1 from TizKizOy/feature
+[33mcace591[m feat: add new structure project
+[33ma43d9fc[m feat: add new structure project
+[33m68b0652[m feat: adding procedures on the server instead of requests
+[33m83cc82e[m add: new page SelectedOrdersTool
+[33m24c824b[m add: migrating the project to sql server
+[33m54ef6ee[m add: current version project
