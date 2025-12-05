@@ -8,7 +8,10 @@ const BackgroundLayout = ({ children }) => {
         <ParallaxBanner
           layers={[
             {
-              image: "image/BackImg2.webp",
+              image: "/images/large/BackImg.webp",
+              srcSet:
+                "/images/small/BackImg.webp 991w, /images/large/BackImg.webp 1200w",
+              sizes: "(max-width: 991px) 100vw, 1200px",
               speed: -10,
             },
           ]}

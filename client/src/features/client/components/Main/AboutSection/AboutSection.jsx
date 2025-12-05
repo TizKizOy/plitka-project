@@ -1,8 +1,5 @@
 import { useEffect, useRef } from "react";
 import style from "./AboutSection.module.css";
-import AboutUsLeft from "/image/AboutUsLeft.webp";
-import AboutUsCenter from "/image/AboutUsCenter.webp";
-import AboutUsRight from "/image/AboutUsRight.webp";
 
 const AboutSection = () => {
   const imagesRef = useRef([]);
@@ -44,19 +41,28 @@ const AboutSection = () => {
         <img
           ref={(el) => (imagesRef.current[0] = el)}
           className={style.image}
-          src={AboutUsLeft}
+          loading="lazy"
+          src="/image/AboutUsLeft.webp"
+          srcSet="/images/small/AboutUsLeft.webp 991w, /images/large/AboutUsLeft.webp 1200w"
+          sizes="(max-width: 991px) 100vw, 1200px"
           alt="Уютный дом слева"
         />
         <img
           ref={(el) => (imagesRef.current[1] = el)}
           className={style.image}
-          src={AboutUsCenter}
+          loading="lazy"
+          src="/image/AboutUsCenter.webp"
+          srcSet="/images/small/AboutUsCenter.webp 991w, /images/large/AboutUsCenter.webp 1200w"
+          sizes="(max-width: 991px) 100vw, 1200px"
           alt="Уютный дом по центру"
         />
         <img
           ref={(el) => (imagesRef.current[2] = el)}
           className={style.image}
-          src={AboutUsRight}
+          loading="lazy"
+          src="/image/AboutUsRight.webp"
+          srcSet="/images/small/AboutUsRight.webp 991w, /images/large/AboutUsRight.webp 1200w"
+          sizes="(max-width: 991px) 100vw, 1200px"
           alt="Уютный дом справа"
         />
       </div>

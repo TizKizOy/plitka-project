@@ -36,7 +36,12 @@ const PortfolioSection = () => {
                 key={el.id}
                 style={{ display: "flex", justifyContent: "center" }}
               >
-                <PortfolioCard img={el.image} title={el.title} text={el.text} />
+                <PortfolioCard
+                  imageSmall={el.imageSmall}
+                  imageLarge={el.imageLarge}
+                  title={el.title}
+                  text={el.text}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
