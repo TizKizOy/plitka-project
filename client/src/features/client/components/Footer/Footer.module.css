@@ -2,8 +2,12 @@
   margin-bottom: 8rem;
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 4rem;
   flex-wrap: wrap;
+}
+
+.icon {
+  width: 3.8rem;
 }
 
 .footerButton {

@@ -20,14 +20,17 @@
 
 .closeButton {
   position: absolute;
-  top: 0rem;
+  top: 2rem;
   right: 3rem;
   background: none;
   border: none;
-  font-size: 5rem;
   cursor: pointer;
   color: rgba(55, 55, 55, 0.7);
   z-index: 1003;
+}
+
+.icon {
+  width: 2.5rem;
 }
 
 .closeButton:hover {
@@ -82,10 +85,10 @@
     border-radius: 5rem;
   }
   .closeButton {
-    top: 0rem;
-    right: 2rem;
-    font-size: 7rem;
+    top: 2rem;
+    right: 2.5rem;
   }
+
   .formCard h2 {
     font-size: 3.2rem;
   }

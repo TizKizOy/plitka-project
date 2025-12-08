@@ -11,6 +11,7 @@ const ServicesCards = () => {
           icon={el.icon}
           title={el.title}
           text={el.text}
+          sizeClass={el.sizeClass}
         />
       ))}
     </div>

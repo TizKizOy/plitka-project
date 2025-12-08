@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import style from "./ServicesSection.module.css";
 import ServicesCards from "./ServicesCards/ServicesCards";
 

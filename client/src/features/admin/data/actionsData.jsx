@@ -1,6 +1,3 @@
-import { CiLock, CiUnlock, CiTrash } from "react-icons/ci";
-import { FiX } from "react-icons/fi";
-
 export const actions = (
   onSetStatusClosed,
   onSetStatusActive,
@@ -8,22 +5,26 @@ export const actions = (
   onClose
 ) => [
   {
-    icon: <CiUnlock size={22} />,
+    icon: "unlock",
+    sizeClass: "iconLarge",
     name: "Сделать активной",
     onClick: onSetStatusActive,
   },
   {
-    icon: <CiLock size={22} />,
+    icon: "lock",
+    sizeClass: "iconLarge",
     name: "Закрыть заявку",
     onClick: onSetStatusClosed,
   },
   {
-    icon: <CiTrash size={22} />,
+    icon: "trash",
+    sizeClass: "iconLarge",
     name: "Удалить",
     onClick: onDeleteOrder,
   },
   {
-    icon: <FiX size={22} color="grey" />,
+    icon: "close",
+    sizeClass: "iconSmall",
     name: "Закрыть панель",
     onClick: onClose,
   },

@@ -5,7 +5,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import PortfolioCard from "./PortfolioCard/PortfolioCard";
 import portfolioData from "../../../data/portfolioData.json";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import Icon from "../../../../../shared/components/Icon";
 
 const PortfolioSection = () => {
   return (
@@ -48,7 +48,7 @@ const PortfolioSection = () => {
         </div>
 
         <div className={style.customNavButtonNext}>
-          <MdKeyboardArrowRight size={33} color="#B7B7B7" />
+          <Icon className={style.icon} name="arrowRight" />
         </div>
       </div>
     </div>
