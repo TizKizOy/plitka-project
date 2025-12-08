@@ -76,6 +76,9 @@
     width: 90%;
     height: 6rem;
   }
+  .selectedCount {
+    font-size: 2rem;
+  }
   .iconSmall {
     width: 1.8rem;
   }
