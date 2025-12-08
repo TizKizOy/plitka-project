@@ -4,6 +4,7 @@ import FooterButton from "./FooterButton/FooterButton";
 import footerButtonsData from "../../data/footerButtonsData";
 import NavList from "../../../../shared/components/NavList/NavList";
 import navItems from "../../data/navItems.json";
+import Icon from "../../../../shared/components/Icon";
 
 const Footer = () => {
   const buttonRefs = useRef([]);
@@ -49,7 +50,9 @@ const Footer = () => {
             ref={(el) => (buttonRefs.current[index] = el)}
             className={style.footerButton}
           >
-            <FooterButton href={button.href}>{button.icon}</FooterButton>
+            <FooterButton href={button.href}>
+              <Icon name={button.icon} className={style.icon} />
+            </FooterButton>
           </div>
         ))}
       </div>

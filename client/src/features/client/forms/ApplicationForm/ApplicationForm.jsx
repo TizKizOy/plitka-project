@@ -1,7 +1,7 @@
 import style from "./ApplicationForm.module.css";
 import Input from "./Input/Input";
 import services from "../../../../shared/data/servicesForm.json";
-import { VscClose } from "react-icons/vsc";
+import Icon from "../../../../shared/components/Icon";
 
 const ApplicationForm = ({
   onClick,
@@ -21,7 +21,7 @@ const ApplicationForm = ({
             onClick={() => onClick(false)}
             disabled={isLoading}
           >
-            <VscClose size={32} />
+            <Icon className={style.icon} name="close" />
           </button>
           <div className={style.formCard}>
             <h2>Оставить заявку</h2>

@@ -7,12 +7,9 @@
   margin-bottom: 8rem;
   color: white;
 }
-.footButton:not(:last-child) {
-  margin-right: 4rem;
-}
-.footButton svg {
+.footButton img {
   transition: transform 0.3s ease;
 }
-.footButton svg:hover {
+.footButton img:hover {
   transform: scale(1.15);
 }

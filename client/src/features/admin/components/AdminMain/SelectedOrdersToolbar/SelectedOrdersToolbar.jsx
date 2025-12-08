@@ -1,6 +1,6 @@
 import style from "./SelectedOrdersToolbar.module.css";
-import { CiLock, CiUnlock, CiTrash } from "react-icons/ci";
-import { FiX } from "react-icons/fi";
+import { actions } from "../../../data/actionsData";
+import Icon from "../../../../../shared/components/Icon";
 
 const SelectedOrdersToolbar = ({
   selectedOrdersCount,
@@ -10,26 +10,42 @@ const SelectedOrdersToolbar = ({
   onClose,
   isVisible,
 }) => {
+  const toolbarActions = actions(
+    onSetStatusClosed,
+    onSetStatusActive,
+    onDeleteOrder,
+    onClose
+  );
+
+  const closeAction = toolbarActions.find(
+    (action) => action.name === "Закрыть панель"
+  );
+
+  const mainActions = toolbarActions.filter(
+    (action) => action.name !== "Закрыть панель"
+  );
+
   return (
     <div
       className={`${style.toolbar} ${isVisible ? style.toolbar_visible : ""}`}
     >
       <div className={style.selectedCount}>
-        <FiX className={style.closeIcon} onClick={onClose} />
+        <button className={style.closeIcon} onClick={closeAction.onClick}>
+          <Icon
+            name={closeAction.icon}
+            className={style[closeAction.sizeClass]}
+          />
+        </button>
         <span>
           {selectedOrdersCount} заявк{selectedOrdersCount === 1 ? "а" : "и"}
         </span>
       </div>
       <div className={style.buttons}>
-        <button className={style.button} onClick={onSetStatusActive}>
-          <CiUnlock />
-        </button>
-        <button className={style.button} onClick={onSetStatusClosed}>
-          <CiLock />
-        </button>
-        <button className={style.button} onClick={onDeleteOrder}>
-          <CiTrash />
-        </button>
+        {mainActions.map((action, index) => (
+          <button key={index} className={style.button} onClick={action.onClick}>
+            <Icon name={action.icon} className={style[action.sizeClass]} />
+          </button>
+        ))}
       </div>
     </div>
   );

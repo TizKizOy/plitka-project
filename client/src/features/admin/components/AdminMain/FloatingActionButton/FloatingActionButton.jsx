@@ -2,6 +2,8 @@ import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import { actions } from "../../../data/actionsData";
+import Icon from "../../../../../shared/components/Icon";
+import style from "./FloatingActionButton.module.css";
 
 const FloatingActionButton = ({
   onSetStatusClosed,
@@ -36,8 +38,8 @@ const FloatingActionButton = ({
           },
         },
         "& .MuiSpeedDialIcon-icon": {
-          width: 28,
-          height: 28,
+          width: 25,
+          height: 25,
         },
         "& .MuiSpeedDialAction-fab": {
           width: 48,
@@ -48,20 +50,13 @@ const FloatingActionButton = ({
           gap: "2px",
         },
       }}
-      icon={
-        <SpeedDialIcon
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        />
-      }
+      icon={<SpeedDialIcon />}
     >
       {actionsList.map((action) => (
         <SpeedDialAction
-          key={action.name}
-          icon={action.icon}
+          key={action.id}
+          icon={<Icon name={action.icon} className={style[action.sizeClass]} />}
+          tooltipTitle={action.name}
           onClick={action.onClick}
         />
       ))}

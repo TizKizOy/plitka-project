@@ -24,7 +24,6 @@
 
 .whyChooseUsCardsContainer {
   width: 100%;
-  max-width: 130rem;
   margin: 0 auto;
   opacity: 0;
   transform: translateY(20%);

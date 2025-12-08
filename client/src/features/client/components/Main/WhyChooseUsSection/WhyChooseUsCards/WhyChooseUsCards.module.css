@@ -4,6 +4,10 @@
   grid-template-rows: repeat(2, auto);
   gap: 3rem;
   margin-bottom: 14rem;
+  justify-content: center;
+  max-width: 1840px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cardsContainer > div:nth-child(1) {
