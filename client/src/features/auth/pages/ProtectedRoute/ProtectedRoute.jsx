@@ -13,9 +13,5 @@ export const ProtectedRoute = ({ children }) => {
     return <h1>Проверка авторизации...</h1>;
   }
 
-  if (apiError) {
-    return <p style={{ color: "red" }}>{apiError}</p>;
-  }
-
   return isAuth ? children : <Navigate to="/admin/login" replace />;
 };
