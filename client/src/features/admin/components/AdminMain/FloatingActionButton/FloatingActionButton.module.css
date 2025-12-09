@@ -1,7 +1,7 @@
 .speedDialRoot {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: 2.4rem;
+  right: 2.4rem;
 }
 
 .speedDialFab {
@@ -13,18 +13,18 @@
 }
 
 .speedDialIcon {
-  width: 28px;
-  height: 28px;
+  width: 2.8rem;
+  height: 2.8rem;
 }
 
 .speedDialActionFab {
-  width: 48px;
-  height: 48px;
-  box-shadow: 0px 0px 10px 1px rgba(36, 56, 71, 0.15);
+  width: 4.8rem;
+  height: 4.8rem;
+  box-shadow: 0 0 1rem 0.1rem rgba(36, 56, 71, 0.15);
 }
 
 .speedDialActions {
-  gap: 2px;
+  gap: 0.2rem;
 }
 
 .iconSmall {
@@ -36,7 +36,13 @@
 
 @media (max-width: 640px) {
   .speedDialFab {
-    width: 50px;
-    height: 50px;
+    width: 5rem;
+    height: 5rem;
+  }
+  .iconSmall {
+    width: 1.9rem;
+  }
+  .iconLarge {
+    width: 2.7rem;
   }
 }

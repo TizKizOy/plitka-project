@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import style from "./Footer.module.css";
 import FooterButton from "./FooterButton/FooterButton";
 import footerButtonsData from "../../data/footerButtonsData";
-import NavList from "../../../../shared/components/NavList/NavList";
+import NavList from "../../../../shared/components/NavList";
 import navItems from "../../data/navItems.json";
 import Icon from "../../../../shared/components/Icon";
 
