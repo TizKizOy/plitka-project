@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { useToken } from "../../../shared/hooks/useToken";
-import api from "../../../shared/hooks/useAxios";
+import { useApi } from "../../../shared/hooks/useApi";
 
 export const useOrdersFilters = (setOrders) => {
   const [filters, setFilters] = useState({
@@ -8,7 +7,8 @@ export const useOrdersFilters = (setOrders) => {
     dateRange: "Все",
     searchText: "",
   });
-  const token = useToken();
+
+  const { isLoading, error: apiError, getData } = useApi();
 
   const fetchOrders = async () => {
     try {
@@ -57,14 +57,10 @@ export const useOrdersFilters = (setOrders) => {
 
       if (filters.searchText) params.searchText = filters.searchText;
 
-      const response = await api.get("/order", {
-        params,
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      setOrders(response.data);
-    } catch (error) {
-      console.error("Ошибка при фильтрации заказов:", error);
+      const data = await getData("/order", { params });
+      setOrders(data);
+    } catch (err) {
+      console.error("Ошибка при фильтрации заказов:", err);
     }
   };
 
@@ -97,5 +93,7 @@ export const useOrdersFilters = (setOrders) => {
     handleStatusChange,
     handleDateRangeChange,
     handleSearchChange,
+    isLoading,
+    apiError,
   };
 };
