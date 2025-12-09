@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../../../shared/hooks/useAxios";
+import { useApi } from "../../../shared/hooks/useApi";
 
 export const useLogout = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const { isLoading, error: apiError, postData } = useApi();
+
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      await api.post(`/admin/logout`);
-      localStorage.removeItem("token");
+      await postData("/admin/logout"); 
+      localStorage.removeItem("accessToken");
       navigate("/admin/login");
-    } catch (error) {
-      setError("Не удалось выйти. Попробуйте позже.");
+    } catch (err) {
+      console.error("Ошибка при выходе:", err);
     }
   };
 
-  return { handleLogout, error };
+  return { handleLogout, isLoading, error: apiError };
 };

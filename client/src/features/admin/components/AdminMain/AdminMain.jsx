@@ -8,6 +8,7 @@ import { useOrdersFilters } from "../../hooks/useOrdersFilters";
 import { useOrdersSelection } from "../../hooks/useOrdersSelection";
 import { useEditFormOverlay } from "../../hooks/useEditFormOverlay";
 import { useHighlightRows } from "../../hooks/useHighlightRows";
+import LoaderOverlay from "../../../../shared/components/LoaderOverlay/LoaderOverlay";
 
 const AdminMain = ({ orders: initialOrders, setOrders }) => {
   const {
@@ -26,6 +27,8 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
     handleStatusChange,
     handleDateRangeChange,
     handleSearchChange,
+    isLoading: filtersLoading,
+    apiError: filtersError,
   } = useOrdersFilters(setOrders);
 
   const {
@@ -37,10 +40,16 @@ const AdminMain = ({ orders: initialOrders, setOrders }) => {
     onDeleteOrder,
     handleCloseToolbar,
     deletingRowIds,
+    isLoading: selectionLoading,
+    apiError: selectionError,
   } = useOrdersSelection(setOrders, highlightRows);
+
+  const globalLoading = filtersLoading || selectionLoading;
 
   return (
     <>
+      <LoaderOverlay isLoading={globalLoading} />
+
       <div className={style.content}>
         <FilterSection
           filters={filters}

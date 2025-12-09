@@ -39,7 +39,7 @@ const FloatingActionButton = ({
         },
         "& .MuiSpeedDialIcon-icon": {
           width: 25,
-          height: 25,
+          height: 24,
         },
         "& .MuiSpeedDialAction-fab": {
           width: 48,

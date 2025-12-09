@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { validateForm } from "../utils/validation";
-import { useApi } from "./useApi";
+import { useApi } from "../../../shared/hooks/useApi";
 
 export const useApplicationForm = () => {
   const [data, setData] = useState({
@@ -35,7 +35,7 @@ export const useApplicationForm = () => {
 
     if (isValid) {
       try {
-        await postData("/v1/order", data);
+        await postData("/order", data);
         setData({
           firstName: "",
           phone: "",

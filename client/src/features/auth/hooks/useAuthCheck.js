@@ -1,28 +1,23 @@
 import { useState, useEffect } from "react";
-import { useToken } from "../../../shared/hooks/useToken";
-import api from '../../../shared/hooks/useAxios'
+import { useApi } from "../../../shared/hooks/useApi";
 
 export const useAuthCheck = () => {
   const [isAuth, setIsAuth] = useState(null);
-  const token = useToken(); 
+
+  const { isLoading, error: apiError, getData } = useApi();
 
   useEffect(() => {
     const checkAuth = async () => {
-      if (!token) {
-        setIsAuth(false);
-        return;
-      }
-
       try {
-        const response = await api.get("/admin/protected");
-        setIsAuth(!!response.data.admin);
+        const data = await getData("/admin/protected");
+        setIsAuth(!!data.admin);
       } catch (error) {
         setIsAuth(false);
       }
     };
 
     checkAuth();
-  }, [token]); 
+  }, []); 
 
-  return isAuth;
+  return { isAuth, isLoading, apiError };
 };
