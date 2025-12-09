@@ -1,26 +1,16 @@
 import { useState, useEffect } from "react";
-import { useToken } from "../../../shared/hooks/useToken";
-import api from "../../../shared/hooks/useAxios";
+import { useApi } from "../../../shared/hooks/useApi";
 
 export const useOrders = () => {
   const [orders, setOrders] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const token = useToken();
+  const { isLoading, error: apiError, getData } = useApi();
 
   const getOrders = async () => {
     try {
-      const response = await api.get(`/order`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setOrders(response.data);
-    } catch (error) {
-      console.error("Ошибка при получении данных:", error.message);
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
+      const data = await getData("/order");
+      setOrders(data);
+    } catch (err) {
+      console.error("Ошибка при получении данных:", err);
     }
   };
 
@@ -28,7 +18,5 @@ export const useOrders = () => {
     getOrders();
   }, []);
 
-  return { orders, setOrders, isLoading, error };
+  return { orders, setOrders, isLoading, error: apiError };
 };
-
-

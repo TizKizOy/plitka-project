@@ -1,7 +1,6 @@
 import { useState } from "react";
 import services from "../../../shared/data/servicesForm.json";
-import { useToken } from "../../../shared/hooks/useToken";
-import api from "../../../shared/hooks/useAxios";
+import { useApi } from "../../../shared/hooks/useApi"; 
 
 export const useEditForm = ({
   order,
@@ -45,7 +44,8 @@ export const useEditForm = ({
   };
 
   const [changedFields, setChangedFields] = useState({});
-  const token = useToken();
+
+  const { isLoading, error: apiError, putData } = useApi();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -72,11 +72,9 @@ export const useEditForm = ({
         fkIdService: fkIdService,
         fkIdStatus: formData.statusName === "Активно" ? "1" : "2",
       };
-      await api.put(`/order/${order.pkIdOrder}`, reqData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+
+      await putData(`/order/${order.pkIdOrder}`, reqData);
+
       setOrders((prev) =>
         prev.map((o) =>
           o.pkIdOrder === order.pkIdOrder ? { ...o, ...formData } : o
@@ -90,5 +88,12 @@ export const useEditForm = ({
     }
   };
 
-  return { formData, handleChange, handleSubmit, changedFields };
+  return {
+    formData,
+    handleChange,
+    handleSubmit,
+    changedFields,
+    isLoading,
+    apiError,
+  };
 };

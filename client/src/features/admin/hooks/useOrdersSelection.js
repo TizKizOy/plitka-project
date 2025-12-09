@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { useToken } from "../../../shared/hooks/useToken";
-import api from "../../../shared/hooks/useAxios";
+import { useApi } from "../../../shared/hooks/useApi";
 
 export const useOrdersSelection = (setOrders, highlightRows) => {
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [isSelectedOrderVisible, setIsSelectedOrderVisible] = useState(false);
-  const token = useToken();
+
+  const { isLoading, error: apiError, putData, deleteData } = useApi();
 
   useEffect(() => {
     setIsSelectedOrderVisible(selectedOrders.length > 0);
@@ -24,9 +24,7 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
     try {
       await Promise.all(
         selectedOrders.map((orderId) =>
-          api.put(`/order/${orderId}`, { fkIdStatus: 1 }, {
-            headers: { Authorization: `Bearer ${token}` }
-          })
+          putData(`/order/${orderId}`, { fkIdStatus: 1 })
         )
       );
       setOrders((el) =>
@@ -47,10 +45,7 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
     try {
       await Promise.all(
         selectedOrders.map((orderId) =>
-          api.put(
-            `/order/${orderId}`, { fkIdStatus: 2 }, {
-              headers: { Authorization: `Bearer ${token}` },
-            })
+          putData(`/order/${orderId}`, { fkIdStatus: 2 })
         )
       );
       setOrders((el) =>
@@ -72,11 +67,7 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
     setTimeout(async () => {
       try {
         await Promise.all(
-          selectedOrders.map((orderId) =>
-            api.delete(`/order/${orderId}`, {
-              headers: { Authorization: `Bearer ${token}` },
-            })
-          )
+          selectedOrders.map((orderId) => deleteData(`/order/${orderId}`))
         );
         setOrders((prev) =>
           prev.filter((order) => !selectedOrders.includes(order.pkIdOrder))
@@ -86,7 +77,7 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
       } finally {
         setSelectedOrders([]);
       }
-    }, 500); 
+    }, 500);
   };
 
   const handleCloseToolbar = () => {
@@ -102,5 +93,7 @@ export const useOrdersSelection = (setOrders, highlightRows) => {
     onSetStatusActive,
     onDeleteOrder,
     handleCloseToolbar,
+    isLoading,
+    apiError,
   };
 };

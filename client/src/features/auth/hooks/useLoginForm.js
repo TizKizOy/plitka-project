@@ -8,6 +8,7 @@ export const useLoginForm = () => {
   const [data, setData] = useState({ login: "", password: "" });
   const [error, setError] = useState("");
   const [serverError, setServerError] = useState("");
+  const [isLoading, setIsLoading] = useState(false); 
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
@@ -28,6 +29,7 @@ export const useLoginForm = () => {
       return;
     }
 
+    setIsLoading(true); 
     try {
       const res = await api.post("/admin/login", data);
       const tmp = res.data;
@@ -35,19 +37,22 @@ export const useLoginForm = () => {
       if (tmp.accessToken) {
         localStorage.setItem("accessToken", tmp.accessToken);
       }
-      
+
       navigate("/admin");
     } catch (error) {
       console.error("Ошибка:", error.response?.data?.error || error.message);
       setServerError(error.response?.data?.error || "Ошибка авторизации");
-      setError(""); 
+      setError("");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return {
     showPassword,
     data,
-    error: error || serverError, 
+    error: error || serverError,
+    isLoading, 
     togglePasswordVisibility,
     handlerInputChange,
     handleSubmit,
