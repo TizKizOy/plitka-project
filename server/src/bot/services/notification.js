@@ -29,9 +29,9 @@ async function sendNotification(order) {
       serviceName = "Неизвестная услуга";
   }
 
-  const chatIds = getAuthorizedChatIds();
+  const chatIds = await getAuthorizedChatIds();
 
-  if (chatIds.length === 0) {
+  if (!chatIds || chatIds.length === 0) {
     console.log("Нет авторизованных пользователей для отправки уведомлений.");
     return;
   }
