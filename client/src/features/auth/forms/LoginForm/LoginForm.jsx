@@ -16,7 +16,6 @@ const LoginForm = () => {
 
   return (
     <>
-      {/* глобальный индикатор загрузки */}
       <LoaderOverlay isLoading={isLoading} />
 
       <form className={style.form} onSubmit={handleSubmit}>
