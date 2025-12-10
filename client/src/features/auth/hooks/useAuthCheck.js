@@ -13,11 +13,16 @@ export const useAuthCheck = () => {
         setIsAuth(!!data.admin);
       } catch (error) {
         setIsAuth(false);
+        if (error.response?.status === 401) {
+          setIsAuth(false);
+        } else {
+          setIsAuth(null);
+        }
       }
     };
 
     checkAuth();
   }, []); 
 
-  return { isAuth, isLoading, apiError };
+  return { isAuth, isLoading };
 };

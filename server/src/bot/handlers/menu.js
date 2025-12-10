@@ -1,5 +1,3 @@
-const { text } = require("express");
-
 async function sendAuthMenu(bot, chatId) {
   const options = {
     reply_markup: {

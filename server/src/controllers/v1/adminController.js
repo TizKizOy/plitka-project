@@ -9,7 +9,7 @@ exports.login = async (req, res) => {
     if (!login || !password) {
       return res.status(400).json({ error: "Логин и пароль обязательны!" });
     }
-    const { admin, accessToken, refreshToken } = await adminService.login(
+    const { accessToken, refreshToken } = await adminService.login(
       login,
       password
     );
@@ -23,7 +23,7 @@ exports.login = async (req, res) => {
 
     res
       .status(200)
-      .json({ message: "Авторизация успешна!", accessToken, admin });
+      .json({ message: "Авторизация успешна!", accessToken });
   } catch (err) {
     res.status(401).json({ error: err.message });
   }

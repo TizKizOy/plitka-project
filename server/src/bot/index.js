@@ -15,9 +15,9 @@ setupCallbacks(bot);
 
 bot.on("message", async (msg) => {
   const chatId = msg.chat.id;
-  if (isWaitingForAuth(chatId)) {
+  if (await isWaitingForAuth(chatId)) {
     await handleAuthMessage(bot, msg);
-    removeAuthSession(chatId);
+    await removeAuthSession(chatId);
   }
 });
 

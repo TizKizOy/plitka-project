@@ -1,7 +1,6 @@
 const { getAdminByLogin } = require("../../db/dbAdmin");
 const bcrypt = require("bcrypt");
-const sessions = {};
-const authSessions = new Set();
+const redisClient = require("../../db/dbRedis");
 
 async function findUser(login) {
   return await getAdminByLogin(login);
@@ -12,32 +11,40 @@ async function checkPassword(user, password) {
   return await bcrypt.compare(password, user.passwordHash);
 }
 
-function setSession(chatId, login) {
-  sessions[chatId] = { isAuth: true, user: login };
+async function setSession(chatId, login) {
+  const sessionData = { isAuth: true, user: login };
+  await redisClient.set(`session:${chatId}`, JSON.stringify(sessionData), {
+    EX: 3600,
+  });
 }
 
-function clearSession(chatId) {
-  delete sessions[chatId];
+async function clearSession(chatId) {
+  await redisClient.del(`session:${chatId}`);
 }
 
-function isAuth(chatId) {
-  return sessions[chatId] && sessions[chatId].isAuth;
+async function isAuth(chatId) {
+  const data = await redisClient.get(`session:${chatId}`);
+  if(!data) return false
+
+  const session = JSON.parse(data)
+  return session.isAuth;
 }
 
-function getAuthorizedChatIds() {
-  return Object.keys(sessions).filter((chatId) => sessions[chatId].isAuth);
+async function getAuthorizedChatIds() {
+  const ids = await redisClient.sMembers("authorizedChats");
+  return ids;
 }
 
-function addAuthSession(chatId) {
-  authSessions.add(chatId);
+async function addAuthSession(chatId) {
+  await redisClient.sAdd("authSessions", String(chatId));
 }
 
-function removeAuthSession(chatId) {
-  authSessions.delete(chatId);
+async function removeAuthSession(chatId) {
+  await redisClient.sRem("authSessions", String(chatId));
 }
 
-function isWaitingForAuth(chatId) {
-  return authSessions.has(chatId);
+async function isWaitingForAuth(chatId) {
+  return await redisClient.sIsMember("authSessions", String(chatId));
 }
 
 module.exports = {
