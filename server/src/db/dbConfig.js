@@ -8,6 +8,7 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
   ssl: { rejectUnauthorized: false },
+  idleTimeoutMillis: 30000,
 });
 
 pool.query("SELECT NOW()", (err, res) => {

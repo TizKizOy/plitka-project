@@ -8,6 +8,8 @@ export const useOrdersFilters = (setOrders) => {
     searchText: "",
   });
 
+  const [isFirstRender, setIsFirstRender] = useState(true);
+
   const { isLoading, error: apiError, getData } = useApi();
 
   const fetchOrders = async () => {
@@ -65,6 +67,10 @@ export const useOrdersFilters = (setOrders) => {
   };
 
   useEffect(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false);
+      return;
+    }
     fetchOrders();
   }, [filters]);
 

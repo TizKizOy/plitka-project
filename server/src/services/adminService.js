@@ -18,5 +18,5 @@ exports.login = async (login, password) => {
   const accessToken = jwtService.signAccessToken(payload);
   const refreshToken = jwtService.signRefreshToken(payload);
 
-  return { admin, accessToken, refreshToken };
+  return { accessToken, refreshToken };
 };

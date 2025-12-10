@@ -12,6 +12,7 @@ export const useAuthCheck = () => {
         const data = await getData("/admin/protected");
         setIsAuth(!!data.admin);
       } catch (error) {
+        setIsAuth(false);
         if (error.response?.status === 401) {
           setIsAuth(false);
         } else {
@@ -24,5 +25,5 @@ export const useAuthCheck = () => {
   }, []);
 
 
-  return { isAuth, isLoading, apiError };
+  return { isAuth, isLoading };
 };

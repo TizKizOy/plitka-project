@@ -3,7 +3,7 @@ import { useAuthCheck } from "../../hooks/useAuthCheck";
 import LoaderOverlay from "../../../../shared/components/LoaderOverlay/LoaderOverlay";
 
 export const ProtectedRoute = ({ children }) => {
-  const { isAuth, isLoading, apiError } = useAuthCheck();
+  const { isAuth, isLoading } = useAuthCheck();
 
   if (isLoading) {
     return <LoaderOverlay isLoading={true} />;

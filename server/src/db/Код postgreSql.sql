@@ -1,19 +1,15 @@
-
--- Таблица сервисов
 DROP TABLE IF EXISTS "tbService";
 CREATE TABLE "tbService" (
     "pkIdService" SERIAL PRIMARY KEY,
     "name" VARCHAR(128) NOT NULL
 );
 
--- Таблица статусов
 DROP TABLE IF EXISTS "tbStatus";
 CREATE TABLE "tbStatus" (
     "pkIdStatus" SERIAL PRIMARY KEY,
     "name" VARCHAR(128) NOT NULL
 );
 
--- Таблица заказов
 DROP TABLE IF EXISTS "tbOrder";
 CREATE TABLE "tbOrder" (
     "pkIdOrder" VARCHAR(256) PRIMARY KEY,
@@ -28,12 +24,13 @@ CREATE TABLE "tbOrder" (
     CONSTRAINT "st_fk" FOREIGN KEY ("fkIdStatus") REFERENCES "tbStatus"("pkIdStatus") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
--- Индексы
 CREATE INDEX "ind_tbOrder_firstName" ON "tbOrder"("firstName");
 CREATE INDEX "ind_tbOrder_fkIdService" ON "tbOrder"("fkIdService");
 CREATE INDEX "ind_tbOrder_fkIdStatus" ON "tbOrder"("fkIdStatus");
+CREATE INDEX "idx_tbAdmin_login" ON "tbAdmin"("login");
+CREATE INDEX "ind_tbOrder_dateOfCreation" ON "tbOrder"("dateOfCreation");
 
--- Таблица админов
+
 DROP TABLE IF EXISTS "tbAdmin";
 CREATE TABLE "tbAdmin" (
     "pkIdAdmin" SERIAL PRIMARY KEY,
@@ -41,7 +38,6 @@ CREATE TABLE "tbAdmin" (
     "passwordHash" VARCHAR(528) NOT NULL
 );
 
--- Таблица удалённых заказов
 DROP TABLE IF EXISTS "tbDeletedOrders";
 CREATE TABLE "tbDeletedOrders" (
     "pkIdDeleteOrder" SERIAL PRIMARY KEY,
@@ -56,7 +52,6 @@ CREATE TABLE "tbDeletedOrders" (
     "reason" VARCHAR(1024)
 );
 
--- Триггер для сохранения удалённых заказов
 CREATE OR REPLACE FUNCTION trg_delete_order()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -70,7 +65,6 @@ CREATE TRIGGER "trg_DeleteOrder_SaveOrderInTbDeletedOrders"
 AFTER DELETE ON "tbOrder"
 FOR EACH ROW EXECUTE FUNCTION trg_delete_order();
 
--- Начальные данные
 INSERT INTO "tbStatus"("name") VALUES ('Активно'), ('Закрыто');
 INSERT INTO "tbService"("name") VALUES 
 ('Укладка плитки'), ('Рулонный/посевной газон'), ('Грунтовая дорога'),
@@ -165,19 +159,12 @@ $$ LANGUAGE plpgsql;
 
 
 CREATE OR REPLACE FUNCTION pr_GetAdminByLogin(_login VARCHAR)
-RETURNS TABLE (
-    "pkIdAdmin" INT,
-    "login" VARCHAR,
-    "passwordHash" VARCHAR
-) AS $$
+RETURNS "tbAdmin" AS $$
+DECLARE
+    admin_record "tbAdmin";
 BEGIN
-    RETURN QUERY
-    SELECT
-        a."pkIdAdmin" AS "pkIdAdmin",
-        a."login" AS "login",
-        a."passwordHash" AS "passwordHash"
-    FROM "tbAdmin" a
-    WHERE a."login" = _login;
+    SELECT * INTO admin_record FROM "tbAdmin" WHERE "login" = _login LIMIT 1;
+    RETURN admin_record;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -249,6 +236,7 @@ BEGIN
     DELETE FROM "tbOrder" WHERE "pkIdOrder" = _pkIdOrder;
 END;
 $$ LANGUAGE plpgsql;
+
 
 SELECT * FROM pr_FilterOrders();
 SELECT * FROM pr_GetOrderById('7181f5cf-e3e9-42e2-8532-aeb643b69730');
