@@ -1,4 +1,4 @@
-import NavList from "../../../../../shared/components/NavList/NavList";
+import NavList from "../../../../../shared/components/NavList";
 import style from "./NavSidebar.module.css";
 import navItems from "../../../data/navItems.json";
 

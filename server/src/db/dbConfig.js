@@ -1,35 +1,19 @@
-const sql = require("mssql");
-const dotenv = require('dotenv');
-dotenv.config();
+const { Pool } = require('pg');
+require('dotenv').config();
 
-const config = {
-  server: process.env.DB_SERVER,
-  database: process.env.DB_DATABASE,
+const pool = new Pool({
   user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
-  options: {
-    trustedConnection: false,
-    trustServerCertificate: true,
-    enableArithAbort: true,
-    instancename: process.env.DB_OPTIONS_INSTANCENAME,
-  },
-  port: parseInt(process.env.DB_PORT, 10),
-};
+  port: process.env.DB_PORT,
+  ssl: { rejectUnauthorized: false },
+  idleTimeoutMillis: 30000,
+});
 
-let pool;
+pool.query("select 1", (err, res) => {
+  if(err) console.error("dbPostgre ERROR:", err.message);
+  else console.log("dbPostgre OK");
+})
 
-exports.getPool = async () => {
-  if (!pool) {
-    try {
-      pool = await sql.connect(config);
-      console.log("Подключение к базе данных установлено");
-    } catch (err) {
-      console.error("Ошибка подключения к базе:", err);
-      throw err;
-    }
-  }
-  return pool;
-}
-
-
-exports.sql = sql;
+module.exports = pool;

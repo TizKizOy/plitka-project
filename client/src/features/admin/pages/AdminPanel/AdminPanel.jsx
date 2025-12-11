@@ -7,11 +7,13 @@ export const AdminPanel = () => {
   const { orders, setOrders, isLoading, error } = useOrders();
 
   if (isLoading) {
-    return <div>Загрузка данных...</div>;
+    return <div className={style.loading}>Загрузка данных...</div>;
   }
 
   if (error) {
-    return <div>Ошибка при загрузке данных: {error}</div>;
+    return (
+      <div className={style.error}>Ошибка при загрузке данных: {error}</div>
+    );
   }
 
   return (

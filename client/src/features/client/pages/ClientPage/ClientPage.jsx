@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import "./ClientPage.module.css";
+import { useEffect } from "react";
 import ApplicationForm from "../../forms/ApplicationForm/ApplicationForm";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
@@ -47,7 +46,6 @@ export const ClientPage = () => {
       {messageIsVisible && (
         <MessageAfterAppForm onClick={() => setMessageIsVisible(false)} />
       )}
-      {apiError && <div className="error-message">{apiError}</div>}
       <Header onClick={() => setAppFormIsVisible(true)} />
       <Main />
       <Footer />

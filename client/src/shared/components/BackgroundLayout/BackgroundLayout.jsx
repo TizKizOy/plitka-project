@@ -1,10 +1,23 @@
-import style from "./BackgroundLayout.module.css";
+import { ParallaxBanner, ParallaxProvider } from "react-scroll-parallax";
+import styles from "./BackgroundLayout.module.css";
 
 const BackgroundLayout = ({ children }) => {
   return (
-    <div className={style.backImage}>
-      <div className={style.overlay}></div>
-      {children}
+    <div className={styles.container}>
+      <ParallaxProvider>
+        <ParallaxBanner
+          layers={[
+            {
+              image: "/images/large/BackImg.webp",
+              speed: -10,
+            },
+          ]}
+          className={styles.backImage}
+        >
+          <div className={styles.overlay}></div>
+          <div className={styles.content}>{children}</div>
+        </ParallaxBanner>
+      </ParallaxProvider>
     </div>
   );
 };

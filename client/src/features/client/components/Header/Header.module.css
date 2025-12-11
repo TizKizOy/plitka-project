@@ -1,11 +1,32 @@
+@keyframes dropDown {
+  0% {
+    transform: translateY(-20%);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(5%);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(-2%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.animation {
+  animation: dropDown 1s ease-out 1;
+}
+
 .content {
   position: relative;
   z-index: 2;
-  padding-top: 16rem;
+  padding-top: 15rem;
 }
 
 @media (max-width: 425px) {
   .content {
-    padding-top: 14rem;
+    padding-top: 13rem;
   }
 }

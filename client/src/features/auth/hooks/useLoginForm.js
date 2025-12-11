@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API_URL } from "../../../shared/utils/apiConfig";
 import { validateForm } from "../utils/validation";
+import api from "../../../shared/hooks/useAxios";
 
 export const useLoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({ login: "", password: "" });
   const [error, setError] = useState("");
   const [serverError, setServerError] = useState("");
+  const [isLoading, setIsLoading] = useState(false); 
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
@@ -29,23 +29,30 @@ export const useLoginForm = () => {
       return;
     }
 
+    setIsLoading(true); 
     try {
-      await axios.post(`${API_URL}/admin/login`, data, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      const res = await api.post("/admin/login", data);
+      const tmp = res.data;
+
+      if (tmp.accessToken) {
+        localStorage.setItem("accessToken", tmp.accessToken);
+      }
+
       navigate("/admin");
     } catch (error) {
       console.error("Ошибка:", error.response?.data?.error || error.message);
       setServerError(error.response?.data?.error || "Ошибка авторизации");
-      setError(""); 
+      setError("");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return {
     showPassword,
     data,
-    error: error || serverError, 
+    error: error || serverError,
+    isLoading, 
     togglePasswordVisibility,
     handlerInputChange,
     handleSubmit,

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { API_URL } from "../../../shared/utils/apiConfig";
+import { useApi } from "../../../shared/hooks/useApi";
 
 export const useOrdersFilters = (setOrders) => {
   const [filters, setFilters] = useState({
@@ -8,6 +7,10 @@ export const useOrdersFilters = (setOrders) => {
     dateRange: "Все",
     searchText: "",
   });
+
+  const [isFirstRender, setIsFirstRender] = useState(true);
+
+  const { isLoading, error: apiError, getData } = useApi();
 
   const fetchOrders = async () => {
     try {
@@ -56,18 +59,18 @@ export const useOrdersFilters = (setOrders) => {
 
       if (filters.searchText) params.searchText = filters.searchText;
 
-      const response = await axios.get(`${API_URL}/v1/order`, {
-        params,
-        withCredentials: true,
-      });
-
-      setOrders(response.data);
-    } catch (error) {
-      console.error("Ошибка при фильтрации заказов:", error);
+      const data = await getData("/order", { params });
+      setOrders(data);
+    } catch (err) {
+      console.error("Ошибка при фильтрации заказов:", err);
     }
   };
 
   useEffect(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false);
+      return;
+    }
     fetchOrders();
   }, [filters]);
 
@@ -96,5 +99,7 @@ export const useOrdersFilters = (setOrders) => {
     handleStatusChange,
     handleDateRangeChange,
     handleSearchChange,
+    isLoading,
+    apiError,
   };
 };

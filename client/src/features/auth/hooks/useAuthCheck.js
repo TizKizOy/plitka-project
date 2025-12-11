@@ -1,24 +1,29 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { API_URL } from "../../../shared/utils/apiConfig";
+import { useApi } from "../../../shared/hooks/useApi";
 
 export const useAuthCheck = () => {
   const [isAuth, setIsAuth] = useState(null);
 
+  const { isLoading, error: apiError, getData } = useApi();
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get(`${API_URL}/admin/protected`, {
-          withCredentials: true,
-        });
-        setIsAuth(!!response.data.admin);
+        const data = await getData("/admin/protected");
+        setIsAuth(!!data.admin);
       } catch (error) {
         setIsAuth(false);
+        if (error.response?.status === 401) {
+          setIsAuth(false);
+        } else {
+          setIsAuth(null);
+        }
       }
     };
 
     checkAuth();
   }, []);
 
-  return isAuth;
+
+  return { isAuth, isLoading };
 };

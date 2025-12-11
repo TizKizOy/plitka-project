@@ -1,4 +1,5 @@
 import style from "./FooterButton.module.css";
+import Icon from "../../../../../shared/components/Icon";
 
 const FooterButton = ({ children, href }) => {
   return (

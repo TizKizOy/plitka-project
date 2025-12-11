@@ -1,5 +1,6 @@
 const orderService = require("../../services/orderService");
 const { sendNotification } = require("../../bot/services/notification");
+const { validateOrderData } = require("../../utils/validation");
 
 exports.getOrder = async (req, res, next) => {
   try {
@@ -33,13 +34,12 @@ exports.getOrderById = async (req, res, next) => {
 
 exports.postOrder = async (req, res, next) => {
   try {
-    if (!req.body) {
+    const { isValid, errors } = validateOrderData(req.body);
+
+    if (!isValid) {
       return res
         .status(400)
-        .json({
-          error: "Bad Request",
-          message: "Тело запроса не может быть пустым",
-        });
+        .json({ error: "Validation Error", details: errors });
     }
     const newOrder = await orderService.createOrder(req.body);
     sendNotification(newOrder);

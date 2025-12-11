@@ -1,7 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import services from "../../../shared/data/servicesForm.json";
-import { API_URL } from "../../../shared/utils/apiConfig";
+import { useApi } from "../../../shared/hooks/useApi"; 
 
 export const useEditForm = ({
   order,
@@ -19,7 +18,7 @@ export const useEditForm = ({
         serviceName: "",
         location: "",
         comment: "",
-        status: "Активно",
+        statusName: "",
       };
     }
     const initialServiceLabel = services.find(
@@ -41,10 +40,12 @@ export const useEditForm = ({
       : "",
     location: order?.location || "",
     comment: order?.comment || "",
-    status: order?.status || "Активно",
+    statusName: order?.statusName || "",
   };
 
   const [changedFields, setChangedFields] = useState({});
+
+  const { isLoading, error: apiError, putData } = useApi();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,20 +70,17 @@ export const useEditForm = ({
         location: formData.location,
         comment: formData.comment,
         fkIdService: fkIdService,
-        fkIdStatus: formData.status === "Активно" ? "1" : "2",
+        fkIdStatus: formData.statusName === "Активно" ? "1" : "2",
       };
-      const response = await axios.put(
-        `${API_URL}/v1/order/${order.pkIdOrder}`,
-        reqData,
-        { withCredentials: true }
-      );
+
+      await putData(`/order/${order.pkIdOrder}`, reqData);
+
       setOrders((prev) =>
         prev.map((o) =>
           o.pkIdOrder === order.pkIdOrder ? { ...o, ...formData } : o
         )
       );
       highlightRows([order.pkIdOrder]);
-      await fetchOrders();
       onClose();
       setChangedFields({});
     } catch (error) {
@@ -90,5 +88,12 @@ export const useEditForm = ({
     }
   };
 
-  return { formData, handleChange, handleSubmit, changedFields };
+  return {
+    formData,
+    handleChange,
+    handleSubmit,
+    changedFields,
+    isLoading,
+    apiError,
+  };
 };

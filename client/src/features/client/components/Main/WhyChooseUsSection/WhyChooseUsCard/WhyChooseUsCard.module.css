@@ -1,12 +1,9 @@
 .card {
-  max-width: 40rem;
+  max-width: 45rem;
   padding: 3rem 3rem 4rem 2.5rem;
   border-radius: 4.5rem;
   background: #fff;
   transition: transform 0.3s ease;
-}
-.card:hover {
-  transform: scale(1.07);
 }
 
 .title {
@@ -37,7 +34,7 @@
   .card {
     text-align: center;
     justify-content: center;
-    width: 100%;
+    width: 40rem;
     padding: 3rem 0 2rem 0;
   }
   .title,
@@ -49,7 +46,7 @@
 
 @media (max-width: 425px) {
   .card {
-    width: 90%;
+    width: 83%;
     padding: 2.4rem 3rem;
   }
   .card:not(:last-child) {

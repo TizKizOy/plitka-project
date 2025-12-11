@@ -5,7 +5,7 @@
 }
 
 .statItem {
-  margin-bottom: 10rem;
+  margin-bottom: 6rem;
 }
 
 .statNumber,
@@ -19,7 +19,7 @@
 }
 
 .desktopOnly {
-  display: inline; /* По умолчанию отображается */
+  display: inline;
 }
 
 @media (max-width: 992px) {
@@ -40,7 +40,7 @@
   }
 
   .statItem {
-    margin-bottom: 0rem;
+    margin-bottom: 1rem;
   }
 
   .desktopOnly {

@@ -1,7 +1,7 @@
 import style from "./Nav.module.css";
 import Hamburger from "../Hamburger/Hamburger";
 import NavSidebar from "../NavSidebar/NavSidebar";
-import NavList from "../../../../../shared/components/NavList/NavList";
+import NavList from "../../../../../shared/components/NavList";
 import navItems from "../../../data/navItems.json";
 import { useState } from "react";
 
@@ -16,7 +16,9 @@ const Nav = () => {
     <>
       <nav className={style.nav}>
         <div>
-          <p className={style.logoText}>TileHaus</p>
+          <p className={style.logoText} onClick={() => location.reload()}>
+            TileHaus
+          </p>
         </div>
         <NavList
           items={navItems}

@@ -1,0 +1,48 @@
+.speedDialRoot {
+  position: fixed;
+  bottom: 2.4rem;
+  right: 2.4rem;
+}
+
+.speedDialFab {
+  background-color: #88a2b3;
+}
+
+.speedDialFab:hover {
+  background-color: #748997ff;
+}
+
+.speedDialIcon {
+  width: 2.8rem;
+  height: 2.8rem;
+}
+
+.speedDialActionFab {
+  width: 4.8rem;
+  height: 4.8rem;
+  box-shadow: 0 0 1rem 0.1rem rgba(36, 56, 71, 0.15);
+}
+
+.speedDialActions {
+  gap: 0.2rem;
+}
+
+.iconSmall {
+  width: 1.4rem;
+}
+.iconLarge {
+  width: 2.2rem;
+}
+
+@media (max-width: 640px) {
+  .speedDialFab {
+    width: 5rem;
+    height: 5rem;
+  }
+  .iconSmall {
+    width: 1.9rem;
+  }
+  .iconLarge {
+    width: 2.7rem;
+  }
+}

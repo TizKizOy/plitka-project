@@ -3,6 +3,13 @@
   padding-top: 12rem;
 }
 
+.loading,
+.error {
+  font-size: 4rem;
+  color: black;
+  padding: 10rem;
+}
+
 @media (max-width: 425px) {
   .content {
     padding: 12rem 3rem;

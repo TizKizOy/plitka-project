@@ -1,0 +1,13 @@
+[
+  { "icon": "phone", "alt": "Phone Call", "href": "tel:+375331112233" },
+  {
+    "icon": "telegram",
+    "alt": "Telegram",
+    "href": "https://t.me/+g3t5CD9l0eQ0MmYy"
+  },
+  {
+    "icon": "instagram",
+    "alt": "Instagram",
+    "href": "https://www.instagram.com/tilehauss"
+  }
+]

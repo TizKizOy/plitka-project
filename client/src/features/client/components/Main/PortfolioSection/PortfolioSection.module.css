@@ -6,9 +6,69 @@
   text-transform: uppercase;
 }
 
+.sliderWrapper {
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+
+.sliderContainer {
+  width: 100%;
+  z-index: 0;
+}
+
+.swiper {
+  width: 100%;
+  padding: 0 50px;
+  box-sizing: border-box;
+}
+
+.customNavButtonNext {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 3rem;
+  width: 5.5rem;
+  height: 5.5rem;
+  background-color: rgba(255, 255, 255, 0.89);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+  width: 1.4rem;
+  padding-left: 0.1rem;
+}
+
+.customNavButtonNext:active,
+.customNavButtonNext:hover {
+  background-color: #f1f1f1ce;
+}
+
 @media (max-width: 576px) {
   .title,
   .subtitle {
     text-align: center;
+  }
+  .customNavButtonNext {
+    top: 50%;
+    right: 0rem;
+    transform: translateY(-50%);
+    z-index: 1;
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  .customNavButtonNext:hover {
+    background-color: white;
+  }
+
+  .icon {
+    width: 1.3rem;
   }
 }

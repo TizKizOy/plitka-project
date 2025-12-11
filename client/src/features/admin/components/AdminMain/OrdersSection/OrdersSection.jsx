@@ -20,10 +20,10 @@ const OrdersSection = ({
         </div>
         <div>Имя</div>
         <div>Услуга</div>
-        <div>Локация, км</div>
+        <div>Локация</div>
         <div>Телефон</div>
         <div>Статус</div>
-        <div>Комментарий</div>
+        <div>Комментарий админа</div>
       </div>
       <div className={style.table__list}>
         {orders.map((order) => (
@@ -70,10 +70,10 @@ const OrdersSection = ({
             </div>
             <div className={style.table__status}>
               <span>Статус</span>
-              <p>{order.status || "активно"}</p>
+              <p>{order.statusName || "активно"}</p>
             </div>
             <div className={style.table__comment}>
-              <span>Комментарий</span>
+              <span>Комментарий админа</span>
               <p>{order.comment || "Отсутствует"}</p>
             </div>
           </div>

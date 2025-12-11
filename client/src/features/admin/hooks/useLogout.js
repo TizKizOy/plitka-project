@@ -1,27 +1,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API_URL } from "../../../shared/utils/apiConfig";
+import { useApi } from "../../../shared/hooks/useApi";
 
 export const useLogout = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const { isLoading, error: apiError, postData } = useApi();
+
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(
-        `${API_URL}/admin/logout`,
-        {},
-        { withCredentials: true }
-      );
-      document.cookie =
-        "connect.sid=; Max-Age=0; Path=/; Secure; SameSite=Strict";
+      await postData("/admin/logout"); 
+      localStorage.removeItem("accessToken");
       navigate("/admin/login");
-    } catch (error) {
-      setError("Не удалось выйти. Попробуйте позже.");
+    } catch (err) {
+      console.error("Ошибка при выходе:", err);
     }
   };
 
-  return { handleLogout, error };
+  return { handleLogout, isLoading, error: apiError };
 };

@@ -56,13 +56,16 @@
 
 .inputGroupError span {
   font-size: 1.2rem;
-  color: #646464;
+  color: #ff0404;
 }
 
 @media (max-width: 425px) {
   .inputGroup input,
   .inputGroup select {
     font-size: 2rem;
+  }
+  .inputGroupError span {
+    font-size: 1.4rem;
   }
 
   .selectGroup::after {
