@@ -11,7 +11,7 @@ export const useLogout = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      await postData("/admin/logout"); 
+      await postData("/admin/logout");
       localStorage.removeItem("accessToken");
       navigate("/admin/login");
     } catch (err) {

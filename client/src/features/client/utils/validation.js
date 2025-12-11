@@ -27,7 +27,7 @@ export const validateForm = (data) => {
   if (!data.location.trim()) {
     newErrors.location = "Месторасположение обязательно для заполнения";
     isValid = false;
-  } 
+  }
 
   if (!data.fkIdService) {
     newErrors.fkIdService = "Услуга обязательна для выбора";

@@ -10,7 +10,6 @@ async function checkPassword(user, password) {
   return await bcrypt.compare(password, user.passwordHash);
 }
 
-
 async function setSession(chatId, login) {
   const sessionData = { isAuth: true, user: login };
   await redisClient.set(`session:${chatId}`, JSON.stringify(sessionData), {
@@ -28,7 +27,6 @@ async function clearSession(chatId) {
   await redisClient.del(`session:${chatId}`);
 }
 
-
 async function addAuthorizedChatIds(chatId) {
   await redisClient.sAdd("authorizedChats", String(chatId));
 }
@@ -39,7 +37,6 @@ async function getAuthorizedChatIds() {
 async function removeAuthorizedChatIds(chatId) {
   await redisClient.sRem("authorizedChats", String(chatId));
 }
-
 
 async function addAuthSession(chatId) {
   await redisClient.sAdd("authSessions", String(chatId));
