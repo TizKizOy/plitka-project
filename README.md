@@ -74,6 +74,7 @@
 
 ## 📂 Структура проекта
 
+```text
 plitka-project/
 ├── client/ # фронтенд (React + Vite)
 │ ├── public/ # статические файлы
@@ -109,6 +110,7 @@ plitka-project/
 │ └── ...
 ├── README.md
 └── ...
+```
 
 ---
 

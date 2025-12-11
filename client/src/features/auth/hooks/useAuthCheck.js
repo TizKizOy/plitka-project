@@ -24,6 +24,5 @@ export const useAuthCheck = () => {
     checkAuth();
   }, []);
 
-
   return { isAuth, isLoading };
 };

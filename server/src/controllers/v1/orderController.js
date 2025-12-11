@@ -4,13 +4,13 @@ const { validateOrderData } = require("../../utils/validation");
 
 exports.getOrder = async (req, res, next) => {
   try {
-    const { status, startDate, endDate, searchText} = req.query;
-      orders = await orderService.getAllOrders({
-        status,
-        startDate,
-        endDate,
-        searchText,
-      });
+    const { status, startDate, endDate, searchText } = req.query;
+    orders = await orderService.getAllOrders({
+      status,
+      startDate,
+      endDate,
+      searchText,
+    });
     res.json(orders);
   } catch (error) {
     next(error);
@@ -29,8 +29,6 @@ exports.getOrderById = async (req, res, next) => {
     next(error);
   }
 };
-
-
 
 exports.postOrder = async (req, res, next) => {
   try {
@@ -60,12 +58,10 @@ exports.postOrder = async (req, res, next) => {
 exports.putOrderById = async (req, res, next) => {
   try {
     if (!req.body || Object.keys(req.body).length === 0) {
-      return res
-        .status(400)
-        .json({
-          error: "Bad Request",
-          message: "Тело запроса не может быть пустым",
-        });
+      return res.status(400).json({
+        error: "Bad Request",
+        message: "Тело запроса не может быть пустым",
+      });
     }
 
     const updatedOrder = await orderService.updateOrder(
