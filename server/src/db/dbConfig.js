@@ -11,12 +11,9 @@ const pool = new Pool({
   idleTimeoutMillis: 30000,
 });
 
-pool.query("SELECT NOW()", (err, res) => {
-  if (err) {
-    console.error("Ошибка подключения к базе:", err);
-  } else {
-    console.log("Подключение успешно! Текущее время:", res.rows[0].now);
-  }
-});
+pool.query("select 1", (err, res) => {
+  if(err) console.error("dbPostgre ERROR:", err.message);
+  else console.log("dbPostgre OK");
+})
 
 module.exports = pool;
