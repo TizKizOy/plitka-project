@@ -33,11 +33,9 @@ app.use("/v1/admin", adminRoutes);
 
 const port = process.env.PORT;
 const server = app.listen(port, () => {
-  const host = server.address().address;
-  const actualPort = server.address().port;
-  console.log(
-    `Сервер запущен по адресу: http://${
-      host === "::" ? "localhost" : host
-    }:${actualPort}`
-  );
+  console.log("serverExpress OK");
+});
+
+server.on("error", (err) => {
+  console.error("serverExpress ERROR:", err.message);
 });

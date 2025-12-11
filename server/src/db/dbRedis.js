@@ -10,11 +10,17 @@ const redisClient = redis.createClient({
   },
 });
 
-redisClient.on("error", (err) => console.log("Redis Client Error", err));
+redisClient.on("error", (err) => {
+  console.error("dbRedis ERROR:", err.message);
+});
 
 (async () => {
-  await redisClient.connect();
-  console.log("Установлено соединение с Redis");
+  try {
+    await redisClient.connect();
+    console.log("dbRedis OK");
+  } catch (err) {
+    console.error("dbRedis ERROR:", err.message);
+  }
 })();
 
 module.exports = redisClient;

@@ -1,4 +1,4 @@
-const { isAuth, clearSession, addAuthSession } = require("../services/session");
+const { isAuth, clearSession, addAuthSession, removeAuthorizedChatIds } = require("../services/session");
 const { formatOrderMessage } = require("../services/formatOrderMessage");
 const { handleFieldEdit, updateAndShowOrder } = require("./orderHandlers");
 const {
@@ -16,7 +16,7 @@ function setupCallbacks(bot) {
 
     try {
       if (data === "auth") {
-        addAuthSession(chatId);
+        await addAuthSession(chatId);
         await bot.sendMessage(
           chatId,
           "🔐 Введите логин и пароль в формате: логин пароль"
@@ -35,7 +35,8 @@ function setupCallbacks(bot) {
         });
       }
 
-      if (!isAuth(chatId) && data !== "auth") {
+      const authed = await isAuth(chatId);
+      if (!authed && data !== "auth") {
         return bot.answerCallbackQuery(callbackQuery.id, {
           text: "⚠️ Сначала авторизуйтесь через кнопку 'Авторизация'",
           show_alert: true,
@@ -43,7 +44,8 @@ function setupCallbacks(bot) {
       }
 
       if (data === "exit") {
-        clearSession(chatId);
+        await clearSession(chatId);
+        await removeAuthorizedChatIds(chatId);
         await bot.answerCallbackQuery(callbackQuery.id, {
           text: "Вы вышли из аккаунта. 👋",
           show_alert: true,
