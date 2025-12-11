@@ -1,4 +1,4 @@
-const { findUser, checkPassword, setSession } = require("../services/session");
+const { findUser, checkPassword, setSession, addAuthorizedChatIds } = require("../services/session");
 const { sendMainMenu } = require("./menu");
 
 async function handleAuthMessage(bot, msg) {
@@ -11,7 +11,8 @@ async function handleAuthMessage(bot, msg) {
     try {
       const user = await findUser(login);
       if (user && (await checkPassword(user, password))) {
-        setSession(chatId, login);
+        await setSession(chatId, login);
+        await addAuthorizedChatIds(chatId);
         await bot.sendMessage(
           chatId,
           `✅ Авторизация успешна! Добро пожаловать, ${login}`
