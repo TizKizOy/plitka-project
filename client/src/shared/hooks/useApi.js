@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "./useAxios"; 
+import api from "./useAxios";
 
 export const useApi = () => {
   const [isLoading, setIsLoading] = useState(false);

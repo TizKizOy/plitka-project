@@ -16,10 +16,10 @@ async function getAllOrders({ status, startDate, endDate, searchText } = {}) {
 }
 
 async function getOrderById(pkIdOrder) {
-  try{
+  try {
     const result = await db.getOrderById(pkIdOrder);
-    return result
-  }catch (error){
+    return result;
+  } catch (error) {
     console.error("Ошибка при получении заказа:", error);
   }
 }
@@ -38,9 +38,9 @@ async function getLastOrder() {
 }
 
 async function updateOrder(orderId, newData) {
-  try{
+  try {
     await db.updateOrder(orderId, newData);
-  }catch (error){
+  } catch (error) {
     console.error("Ошибка при редактировании заявки:", error);
   }
 }

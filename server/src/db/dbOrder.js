@@ -15,17 +15,14 @@ exports.readOrder = async ({ status, startDate, endDate, searchText } = {}) => {
 
 exports.addOrder = async (order) => {
   try {
-    await pool.query(
-      `SELECT pr_InsertOrder($1, $2, $3, $4, $5, $6);`,
-      [
-        order.pkIdOrder,
-        order.firstName,
-        order.phone,
-        order.location,
-        order.fkIdService || 7,
-        order.fkIdStatus || 1,
-      ]
-    );
+    await pool.query(`SELECT pr_InsertOrder($1, $2, $3, $4, $5, $6);`, [
+      order.pkIdOrder,
+      order.firstName,
+      order.phone,
+      order.location,
+      order.fkIdService || 7,
+      order.fkIdStatus || 1,
+    ]);
     const { rows } = await pool.query(`SELECT * FROM pr_GetOrderById($1);`, [
       order.pkIdOrder,
     ]);
@@ -77,4 +74,3 @@ exports.deleteOrder = async (pkIdOrder) => {
     throw err;
   }
 };
-

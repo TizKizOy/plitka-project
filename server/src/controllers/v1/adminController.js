@@ -1,5 +1,5 @@
 require("dotenv").config();
-const jwtService = require('../../services/jwtService')
+const jwtService = require("../../services/jwtService");
 const adminService = require("../../services/adminService");
 const isProduction = process.env.NODE_ENV == "production";
 
@@ -21,9 +21,7 @@ exports.login = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res
-      .status(200)
-      .json({ message: "Авторизация успешна!", accessToken });
+    res.status(200).json({ message: "Авторизация успешна!", accessToken });
   } catch (err) {
     res.status(401).json({ error: err.message });
   }
@@ -31,9 +29,9 @@ exports.login = async (req, res) => {
 
 exports.refresh = (req, res) => {
   const refreshToken = req.cookies?.refreshToken;
-  if(!refreshToken)
-    return res.status(401).json({ error: 'Нет refresh токена' });
-  try{
+  if (!refreshToken)
+    return res.status(401).json({ error: "Нет refresh токена" });
+  try {
     const decoded = jwtService.verifyRefreshToken(refreshToken);
     const accessToken = jwtService.signAccessToken({
       userId: decoded.pkIdAdmin,

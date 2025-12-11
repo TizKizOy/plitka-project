@@ -1,4 +1,9 @@
-const { findUser, checkPassword, setSession, addAuthorizedChatIds } = require("../services/session");
+const {
+  findUser,
+  checkPassword,
+  setSession,
+  addAuthorizedChatIds,
+} = require("../services/session");
 const { sendMainMenu } = require("./menu");
 
 async function handleAuthMessage(bot, msg) {
@@ -18,7 +23,6 @@ async function handleAuthMessage(bot, msg) {
           `✅ Авторизация успешна! Добро пожаловать, ${login}`
         );
         await sendMainMenu(bot, chatId);
-
       } else {
         await bot.sendMessage(chatId, "❌ Неверный логин или пароль.");
       }

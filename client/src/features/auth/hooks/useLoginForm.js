@@ -8,7 +8,7 @@ export const useLoginForm = () => {
   const [data, setData] = useState({ login: "", password: "" });
   const [error, setError] = useState("");
   const [serverError, setServerError] = useState("");
-  const [isLoading, setIsLoading] = useState(false); 
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
@@ -29,7 +29,7 @@ export const useLoginForm = () => {
       return;
     }
 
-    setIsLoading(true); 
+    setIsLoading(true);
     try {
       const res = await api.post("/admin/login", data);
       const tmp = res.data;
@@ -52,7 +52,7 @@ export const useLoginForm = () => {
     showPassword,
     data,
     error: error || serverError,
-    isLoading, 
+    isLoading,
     togglePasswordVisibility,
     handlerInputChange,
     handleSubmit,
